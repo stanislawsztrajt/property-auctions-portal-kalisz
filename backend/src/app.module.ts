@@ -4,8 +4,11 @@ import { AppService } from './app.service';
 import { UsersModule } from 'modules/users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Users } from 'modules/users/entities/user.entity';
+import { User } from 'modules/users/entities/user.entity';
 import { AuthModule } from 'modules/auth/auth.module';
+import { AuctionsModule } from './modules/auctions/auctions.module';
+import { SavedAuctionsModule } from './modules/saved-auctions/saved-auctions.module';
+import { Auction } from 'modules/auctions/entities/auction.entity';
 
 
 @Module({
@@ -20,13 +23,15 @@ import { AuthModule } from 'modules/auth/auth.module';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [Users],
+        entities: [Auction, User],
         synchronize: true,
       }),
       inject: [ConfigService],
     }),
     UsersModule,
-    AuthModule
+    AuthModule,
+    SavedAuctionsModule,
+    AuctionsModule
   ],
   controllers: [AppController],
   providers: [AppService],

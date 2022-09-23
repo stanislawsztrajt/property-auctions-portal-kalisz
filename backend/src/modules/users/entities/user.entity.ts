@@ -1,7 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Auction } from 'modules/auctions/entities/auction.entity';
+import { SavedAuction } from 'modules/saved-auctions/entities/saved-auction.entity';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany } from 'typeorm';
 
 @Entity()
-export class Users {
+export class User {
   @PrimaryGeneratedColumn()
   public id!: number;
 
@@ -22,4 +24,10 @@ export class Users {
 
   @UpdateDateColumn({ type: 'timestamp' })
   public updatedAt: Date;
+
+  @OneToMany(() => Auction, (auction) => auction.user)
+  public auctions: Auction[]
+
+  @OneToMany(() => SavedAuction, (savedAuction) => savedAuction.user)
+  public savedAuctions: SavedAuction[]
 }

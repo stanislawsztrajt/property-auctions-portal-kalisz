@@ -3,14 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { Users } from './entities/user.entity';
+import { User } from './entities/user.entity';
 import { Role } from './types/roles';
 
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(Users) private readonly userRepository: Repository<Users>,
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
 
   create(createUserDto: CreateUserDto) {
@@ -20,7 +20,7 @@ export class UsersService {
   }
 
   findAll() {
-    return this.userRepository.find();
+    return this.userRepository.find({ relations: { auctions: true } });
   }
 
   findOne(id: number) {
