@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Users } from 'modules/users/entities/user.entity';
+import { User } from 'modules/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
@@ -9,13 +9,13 @@ import { isPasswordMatch } from 'utils/helpers/bcrypt';
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(Users) private readonly userRepository: Repository<Users>,
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
     private jwtService: JwtService
   ) {}
 
   async validateUser ({ identifier, password}: LoginDto) {
-    const findUserByIdentifierQuery = `SELECT * FROM public."users" WHERE email='${identifier}' OR username='${identifier}' LIMIT 1`
-    const user: Users[] = await this.userRepository.query(findUserByIdentifierQuery)
+    const findUserByIdentifierQuery = `SELECT * FROM public."user" WHERE email='${identifier}' OR username='${identifier}' LIMIT 1`
+    const user: User[] = await this.userRepository.query(findUserByIdentifierQuery)
 
     if (user[0] && await isPasswordMatch(password, user[0].password)) {
       const { password, ...result } = user[0];
