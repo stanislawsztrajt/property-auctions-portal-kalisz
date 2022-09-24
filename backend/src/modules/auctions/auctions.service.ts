@@ -4,18 +4,33 @@ import { Repository } from 'typeorm';
 import { CreateAuctionDto } from './dto/create-auction.dto';
 import { UpdateAuctionDto } from './dto/update-auction.dto';
 import { Auction } from './entities/auction.entity';
+import { Tcategory } from './types';
 
 @Injectable()
 export class AuctionsService {
   constructor(
-    @InjectRepository(Auction) private readonly auctionRepository: Repository<Auction>,
+    @InjectRepository(Auction)
+    private readonly auctionRepository: Repository<Auction>
   ) {}
 
+  findByCategory(category: Tcategory) {
+    return this.auctionRepository.find({
+      where: { category },
+      relations: { user: true },
+    });
+  }
+
+  findInRange(range: number, startRange: number) {
+    const query = `SELECT * FROM auction LIMIT ${range} OFFSET ${startRange}`;
+    return this.auctionRepository.query(query);
+  }
+
+  findUserAuctions(userId: number) {
+    return this.auctionRepository.findBy({ user: { id: userId } })
+  }
+
   create(createAuctionDto: CreateAuctionDto) {
-    console.log('LOGGER LOGGER LOGGER LOGGER')
-    console.log(createAuctionDto)
-    const newAuction = this.auctionRepository.create(createAuctionDto)
-    console.log('LOGGER LOGGER LOGGER LOGGER')
+    const newAuction = this.auctionRepository.create(createAuctionDto);
     return this.auctionRepository.save(newAuction);
   }
 
@@ -24,14 +39,17 @@ export class AuctionsService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} auction`;
+    return this.auctionRepository.findOne({
+      where: { id },
+      relations: { user: true },
+    });
   }
 
   update(id: number, updateAuctionDto: UpdateAuctionDto) {
-    return `This action updates a #${id} auction`;
+    return this.auctionRepository.update(id, updateAuctionDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} auction`;
+    return this.auctionRepository.delete(id);
   }
 }

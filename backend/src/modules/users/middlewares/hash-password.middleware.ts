@@ -7,7 +7,7 @@ import { Irequest } from 'utils/types/api';
 @Injectable()
 export class HashPasswordMiddleware implements NestMiddleware {
   async use(req: Irequest<User>, res: Response, next: NextFunction) {
-    req.body.password = await hashPassword(req.body.password)
+    req.body.password = await hashPassword(req.body.password);
     next();
   }
 }
