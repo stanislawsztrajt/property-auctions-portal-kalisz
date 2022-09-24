@@ -1,5 +1,12 @@
-import { IsBoolean, IsOptional, IsString, MaxLength, MinLength } from "class-validator";
-import { User } from "modules/users/entities/user.entity";
+import {
+  IsBoolean,
+  IsOptional,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
+import { User } from 'modules/users/entities/user.entity';
+import { Tcategory } from '../types';
 
 export class CreateAuctionDto {
   @IsString()
@@ -11,6 +18,10 @@ export class CreateAuctionDto {
   @MaxLength(200)
   @MinLength(8)
   public description: string;
+
+  @IsString()
+  @MaxLength(30)
+  public category: Tcategory;
 
   @IsString()
   @MaxLength(16)
@@ -60,5 +71,5 @@ export class CreateAuctionDto {
   @IsBoolean()
   public parkingSpace: boolean;
 
-  public owner: User
+  public owner: User;
 }

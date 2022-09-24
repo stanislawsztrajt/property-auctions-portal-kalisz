@@ -6,17 +6,16 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { Role } from './types/roles';
 
-
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(User) private readonly userRepository: Repository<User>
   ) {}
 
   create(createUserDto: CreateUserDto) {
     const newUser = this.userRepository.create(createUserDto);
-    newUser.roles = [Role.USER]
-    return this.userRepository.save(newUser)
+    newUser.roles = [Role.USER];
+    return this.userRepository.save(newUser);
   }
 
   findAll() {

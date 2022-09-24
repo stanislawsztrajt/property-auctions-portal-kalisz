@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { SavedAuctionsService } from './saved-auctions.service';
 import { CreateSavedAuctionDto } from './dto/create-saved-auction.dto';
 import { UpdateSavedAuctionDto } from './dto/update-saved-auction.dto';
@@ -23,7 +31,10 @@ export class SavedAuctionsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSavedAuctionDto: UpdateSavedAuctionDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateSavedAuctionDto: UpdateSavedAuctionDto
+  ) {
     return this.savedAuctionsService.update(+id, updateSavedAuctionDto);
   }
 

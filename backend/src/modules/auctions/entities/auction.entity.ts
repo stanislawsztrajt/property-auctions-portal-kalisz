@@ -1,5 +1,15 @@
+import { SavedAuction } from 'modules/saved-auctions/entities/saved-auction.entity';
 import { User } from 'modules/users/entities/user.entity';
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
+import { Tcategory } from '../types';
 
 @Entity()
 export class Auction {
@@ -11,6 +21,9 @@ export class Auction {
 
   @Column({ type: 'varchar', length: 6000, unique: true })
   public description: string;
+
+  @Column({ type: 'varchar', length: 30 })
+  public category: Tcategory;
 
   @Column({ type: 'varchar', length: 16 })
   public price: string;
@@ -52,5 +65,8 @@ export class Auction {
   public updatedAt: Date;
 
   @ManyToOne(() => User, (user) => user.auctions)
-  public user: User
+  public user: User;
+
+  @OneToMany(() => SavedAuction, (savedAuction) => savedAuction.auction)
+  public savedAuctions: SavedAuction[];
 }

@@ -6,11 +6,9 @@ import { User } from './entities/user.entity';
 import { HashPasswordMiddleware } from './middlewares/hash-password.middleware';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([User])
-  ],
+  imports: [TypeOrmModule.forFeature([User])],
   controllers: [UsersController],
-  providers: [UsersService]
+  providers: [UsersService],
 })
 export class UsersModule {
   configure(consumer: MiddlewareConsumer) {

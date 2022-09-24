@@ -7,18 +7,14 @@ import { Auction } from './entities/auction.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Auction]),
-  ],
+  imports: [TypeOrmModule.forFeature([Auction])],
   controllers: [AuctionsController],
-  providers: [AuctionsService, JwtService]
+  providers: [AuctionsService, JwtService],
 })
 export class AuctionsModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(SetOwnerMiddleware)
-      .forRoutes(
-        { path: 'auctions', method: RequestMethod.POST },
-      );
+      .forRoutes({ path: 'auctions', method: RequestMethod.POST });
   }
 }
