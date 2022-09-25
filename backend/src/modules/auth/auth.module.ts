@@ -9,16 +9,22 @@ import { ConfigModule } from '@nestjs/config';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
+import { PassportModule } from '@nestjs/passport';
+import { UsersModule } from 'modules/users/users.module';
+import { JwtStrategy } from './strategies/jwt.strategy';
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forFeature([User]),
+    UsersModule,
+    PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '7d' },
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, JwtStrategy],
 })
 export class AuthModule {}
