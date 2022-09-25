@@ -1,3 +1,9 @@
+import { HttpException, HttpStatus } from "@nestjs/common";
+
 export const parseJwt: (jwt: string) => string = (jwt) => {
-  return jwt.split(' ')[1];
+  try {
+    return jwt.split(' ')[1];
+  } catch {
+    throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+  }
 };

@@ -3,18 +3,25 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { SavedAuctionsService } from './saved-auctions.service';
 import { CreateSavedAuctionDto } from './dto/create-saved-auction.dto';
-import { UpdateSavedAuctionDto } from './dto/update-saved-auction.dto';
+import { OwnerGuard } from 'modules/auth/guards/owner.guard';
+import { JwtAuthGuard } from 'modules/auth/guards/jwt-auth.guard';
 
 @Controller('saved-auctions')
 export class SavedAuctionsController {
   constructor(private readonly savedAuctionsService: SavedAuctionsService) {}
 
+  @Get('user/:userId')
+  findUserSavedAuctions(@Param('userId') userId: number) {
+    return this.savedAuctionsService.findUserSavedAuctions(userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createSavedAuctionDto: CreateSavedAuctionDto) {
     return this.savedAuctionsService.create(createSavedAuctionDto);
@@ -30,14 +37,8 @@ export class SavedAuctionsController {
     return this.savedAuctionsService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateSavedAuctionDto: UpdateSavedAuctionDto
-  ) {
-    return this.savedAuctionsService.update(+id, updateSavedAuctionDto);
-  }
-
+  @UseGuards(OwnerGuard)
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.savedAuctionsService.remove(+id);

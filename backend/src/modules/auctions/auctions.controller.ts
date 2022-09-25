@@ -6,7 +6,10 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'modules/auth/guards/jwt-auth.guard';
+import { OwnerGuard } from 'modules/auth/guards/owner.guard';
 import { AuctionsService } from './auctions.service';
 import { CreateAuctionDto } from './dto/create-auction.dto';
 import { UpdateAuctionDto } from './dto/update-auction.dto';
@@ -30,12 +33,11 @@ export class AuctionsController {
   }
 
   @Get('user/:userId')
-  findUserAuctions(
-    @Param('userId') userId: number
-  ) {
+  findUserAuctions(@Param('userId') userId: number) {
     return this.auctionsService.findUserAuctions(userId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createAuctionDto: CreateAuctionDto) {
     return this.auctionsService.create(createAuctionDto);
@@ -51,11 +53,15 @@ export class AuctionsController {
     return this.auctionsService.findOne(+id);
   }
 
+  @UseGuards(OwnerGuard)
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAuctionDto: UpdateAuctionDto) {
     return this.auctionsService.update(+id, updateAuctionDto);
   }
 
+  @UseGuards(OwnerGuard)
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.auctionsService.remove(+id);

@@ -7,7 +7,9 @@ import { Auction } from './entities/auction.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Auction])],
+  imports: [
+    TypeOrmModule.forFeature([Auction])
+  ],
   controllers: [AuctionsController],
   providers: [AuctionsService, JwtService],
 })

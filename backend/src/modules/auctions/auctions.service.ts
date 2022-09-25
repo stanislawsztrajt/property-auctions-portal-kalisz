@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateAuctionDto } from './dto/create-auction.dto';
@@ -26,12 +26,16 @@ export class AuctionsService {
   }
 
   findUserAuctions(userId: number) {
-    return this.auctionRepository.findBy({ user: { id: userId } })
+    return this.auctionRepository.findBy({ user: { id: userId } });
   }
 
-  create(createAuctionDto: CreateAuctionDto) {
-    const newAuction = this.auctionRepository.create(createAuctionDto);
-    return this.auctionRepository.save(newAuction);
+  async create(createAuctionDto: CreateAuctionDto) {
+    try {
+      const newAuction = this.auctionRepository.create(createAuctionDto);
+      return await this.auctionRepository.save(newAuction);
+    } catch {
+      throw new HttpException('Title or description already exist', HttpStatus.BAD_REQUEST)
+    }
   }
 
   findAll() {
@@ -45,8 +49,12 @@ export class AuctionsService {
     });
   }
 
-  update(id: number, updateAuctionDto: UpdateAuctionDto) {
-    return this.auctionRepository.update(id, updateAuctionDto);
+  async update(id: number, updateAuctionDto: UpdateAuctionDto) {
+    try {
+      return await this.auctionRepository.update(id, updateAuctionDto);
+    } catch {
+      throw new HttpException('Title or description already exist', HttpStatus.BAD_REQUEST)
+    }
   }
 
   remove(id: number) {

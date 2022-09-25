@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from 'modules/users/users.module';
@@ -10,6 +10,7 @@ import { AuctionsModule } from './modules/auctions/auctions.module';
 import { SavedAuctionsModule } from './modules/saved-auctions/saved-auctions.module';
 import { Auction } from 'modules/auctions/entities/auction.entity';
 import { SavedAuction } from 'modules/saved-auctions/entities/saved-auction.entity';
+import { LoggerMiddleware } from 'core/middlewares/logger.middleware';
 
 @Module({
   imports: [
@@ -36,4 +37,8 @@ import { SavedAuction } from 'modules/saved-auctions/entities/saved-auction.enti
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
+}

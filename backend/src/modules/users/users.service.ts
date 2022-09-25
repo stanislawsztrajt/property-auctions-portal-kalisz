@@ -12,10 +12,14 @@ export class UsersService {
     @InjectRepository(User) private readonly userRepository: Repository<User>
   ) {}
 
-  create(createUserDto: CreateUserDto) {
-    const newUser = this.userRepository.create(createUserDto);
-    newUser.roles = [Role.USER];
-    return this.userRepository.save(newUser);
+  async create(createUserDto: CreateUserDto) {
+    try {
+      const newUser = this.userRepository.create(createUserDto);
+      newUser.roles = [Role.USER];
+      return await this.userRepository.save(newUser);
+    } catch {
+      throw new HttpException('Username or Email already exist', HttpStatus.BAD_REQUEST)
+    }
   }
 
   findAll() {
@@ -26,8 +30,12 @@ export class UsersService {
     return this.userRepository.findBy({ id });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return this.userRepository.update(id, updateUserDto);
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    try {
+      return await this.userRepository.update(id, updateUserDto);
+    } catch {
+      throw new HttpException('Username or Email already exist', HttpStatus.BAD_REQUEST)
+    }
   }
 
   remove(id: number) {
