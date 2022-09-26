@@ -1,1 +1,3 @@
-export class CreateSavedAuctionDto {}
+export class CreateSavedAuctionDto {
+  auctionId: number;
+}

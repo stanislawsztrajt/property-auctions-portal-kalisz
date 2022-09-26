@@ -1,5 +1,12 @@
+import { Auction } from 'modules/auctions/entities/auction.entity';
 import { User } from 'modules/users/entities/user.entity';
-import { Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+} from 'typeorm';
 
 @Entity()
 export class SavedAuction {
@@ -12,7 +19,9 @@ export class SavedAuction {
   @UpdateDateColumn({ type: 'timestamp' })
   public updatedAt: Date;
 
-  @ManyToOne(() => User, (user) => user.savedAuctions)
-  public user: User
-}
+  @ManyToOne(() => Auction, (auction) => auction.savedAuctions)
+  public auction: Auction;
 
+  @ManyToOne(() => User, (user) => user.savedAuctions)
+  public user: User;
+}

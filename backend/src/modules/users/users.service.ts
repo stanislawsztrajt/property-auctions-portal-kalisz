@@ -6,29 +6,36 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { Role } from './types/roles';
 
-
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(User) private readonly userRepository: Repository<User>
   ) {}
 
-  create(createUserDto: CreateUserDto) {
-    const newUser = this.userRepository.create(createUserDto);
-    newUser.roles = [Role.USER]
-    return this.userRepository.save(newUser)
+  async create(createUserDto: CreateUserDto) {
+    try {
+      const newUser = this.userRepository.create(createUserDto);
+      newUser.roles = [Role.USER];
+      return await this.userRepository.save(newUser);
+    } catch {
+      throw new HttpException('Username or Email already exist', HttpStatus.BAD_REQUEST)
+    }
   }
 
   findAll() {
-    return this.userRepository.find({ relations: { auctions: true } });
+    return this.userRepository.find();
   }
 
   findOne(id: number) {
-    return this.userRepository.findBy({ id });
+    return this.userRepository.find({ where: { id }, relations: { auctions: true } });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return this.userRepository.update(id, updateUserDto);
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    try {
+      return await this.userRepository.update(id, updateUserDto);
+    } catch {
+      throw new HttpException('Username or Email already exist', HttpStatus.BAD_REQUEST)
+    }
   }
 
   remove(id: number) {

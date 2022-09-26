@@ -8,14 +8,14 @@ import { Irequest } from 'utils/types/api';
 
 @Injectable()
 export class SetOwnerMiddleware implements NestMiddleware {
-  constructor (
-    private jwtService: JwtService
-  ) {}
+  constructor(private jwtService: JwtService) {}
 
   async use(req: Irequest<Auction>, res: Response, next: NextFunction) {
-    const token = parseJwt(req.headers.authorization)
-    const user: User = await this.jwtService.verify(token, { secret: process.env.JWT_SECRET })
-    req.body.user = user
+    const token = parseJwt(req.headers.authorization);
+    const user: User = await this.jwtService.verify(token, {
+      secret: process.env.JWT_SECRET,
+    });
+    req.body.user = user;
     next();
   }
 }
