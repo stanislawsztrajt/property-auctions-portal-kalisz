@@ -22,20 +22,23 @@ export class Auction {
   @Column({ type: 'varchar', length: 6000, unique: true })
   public description: string;
 
-  @Column({ type: 'varchar', length: 30 })
-  public category: Tcategory;
-
   @Column({ type: 'varchar', length: 16 })
   public price: string;
 
   @Column({ type: 'varchar', length: 100 })
   public location: string;
 
+  @Column({ type: 'float' })
+  public locationLat: number
+
+  @Column({ type: 'float' })
+  public locationLng: number;
+
   @Column({ type: 'varchar', length: 12 })
   public phoneNumber: string;
 
   @Column({ type: 'varchar', length: 50 })
-  public type: string;
+  public type: Tcategory;
 
   @Column({ type: 'varchar', length: 20 })
   public areaSize: string;

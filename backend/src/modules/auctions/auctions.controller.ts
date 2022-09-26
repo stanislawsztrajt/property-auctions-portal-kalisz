@@ -13,16 +13,12 @@ import { OwnerGuard } from 'modules/auth/guards/owner.guard';
 import { AuctionsService } from './auctions.service';
 import { CreateAuctionDto } from './dto/create-auction.dto';
 import { UpdateAuctionDto } from './dto/update-auction.dto';
-import { Tcategory } from './types';
+
 
 @Controller('auctions')
 export class AuctionsController {
   constructor(private readonly auctionsService: AuctionsService) {}
 
-  @Get('category/:category')
-  findByCategory(@Param('category') category: Tcategory) {
-    return this.auctionsService.findByCategory(category);
-  }
 
   @Get('in-range/:range/:startRange')
   findInRange(
