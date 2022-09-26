@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { CreateAuctionDto } from './dto/create-auction.dto';
 import { UpdateAuctionDto } from './dto/update-auction.dto';
 import { Auction } from './entities/auction.entity';
-import { Tcategory } from './types';
+
 
 @Injectable()
 export class AuctionsService {
@@ -13,12 +13,6 @@ export class AuctionsService {
     private readonly auctionRepository: Repository<Auction>
   ) {}
 
-  findByCategory(category: Tcategory) {
-    return this.auctionRepository.find({
-      where: { category },
-      relations: { user: true },
-    });
-  }
 
   findInRange(range: number, startRange: number) {
     const query = `SELECT * FROM auction LIMIT ${range} OFFSET ${startRange}`;
@@ -38,8 +32,15 @@ export class AuctionsService {
     }
   }
 
-  findAll() {
-    return this.auctionRepository.find({ relations: { user: true } });
+  async findAll() {
+    const query = `
+      SELECT auction.id, auction.title, auction.price, auction.type, auction."locationLat", auction."locationLng", json_build_object('username', public.user.username) as user
+      FROM auction
+      LEFT JOIN public.user
+      ON auction."userId" = public.user.id
+      GROUP BY auction.id, auction.title, auction.price, auction."locationLat",  auction."locationLng", public.user.username
+    `
+    return await this.auctionRepository.query(query)
   }
 
   findOne(id: number) {

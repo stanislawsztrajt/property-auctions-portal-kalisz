@@ -1,11 +1,15 @@
 import {
   IsBoolean,
+  IsNumber,
   IsOptional,
   IsString,
+  Max,
   MaxLength,
+  Min,
   MinLength,
 } from 'class-validator';
 import { User } from 'modules/users/entities/user.entity';
+import { maxLat, maxLng, minLat, minLng } from 'utils/constants';
 import { Tcategory } from '../types';
 
 export class CreateAuctionDto {
@@ -31,13 +35,23 @@ export class CreateAuctionDto {
   @MaxLength(100)
   public location: string;
 
+  @IsNumber()
+  @Min(minLat)
+  @Max(maxLat)
+  public locationLat: number;
+
+  @IsNumber()
+  @Min(minLng)
+  @Max(maxLng)
+  public locationLng: number;
+
   @IsString()
   @MaxLength(12)
   public phoneNumber: string;
 
   @IsString()
   @MaxLength(50)
-  public type: string;
+  public type: Tcategory;
 
   @IsString()
   @MaxLength(20)
@@ -71,5 +85,5 @@ export class CreateAuctionDto {
   @IsBoolean()
   public parkingSpace: boolean;
 
-  public owner: User;
+  public user: User;
 }
