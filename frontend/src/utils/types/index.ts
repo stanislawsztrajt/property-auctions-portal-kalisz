@@ -1,1 +1,1 @@
-export type Tcategory = 'dom' | 'mieszkanie' | 'działka' | 'inna';
+export type Tcategory = "dom" | "mieszkanie" | "działka" | "inna";

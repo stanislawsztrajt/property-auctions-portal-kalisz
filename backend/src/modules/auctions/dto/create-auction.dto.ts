@@ -24,10 +24,6 @@ export class CreateAuctionDto {
   public description: string;
 
   @IsString()
-  @MaxLength(30)
-  public category: Tcategory;
-
-  @IsString()
   @MaxLength(16)
   public price: string;
 

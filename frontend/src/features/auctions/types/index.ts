@@ -4,12 +4,13 @@ import { Tcategory } from "utils/types";
 
 export interface Iauction {
   id: number;
+  slug: string;
   title: string;
   description: string;
   category: Tcategory;
   price: string;
   location: string;
-  locationLat: number
+  locationLat: number;
   locationLng: number;
   phoneNumber: string;
   type: string;
