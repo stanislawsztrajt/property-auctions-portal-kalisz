@@ -5,6 +5,7 @@ import { SetOwnerMiddleware } from 'core/middlewares/set-owner.middleware';
 import { JwtService } from '@nestjs/jwt';
 import { Auction } from './entities/auction.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { SetSlugMiddleware } from './middlewares/set-slug.middleware';
 
 @Module({
   imports: [
@@ -17,6 +18,8 @@ export class AuctionsModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(SetOwnerMiddleware)
-      .forRoutes({ path: 'auctions', method: RequestMethod.POST });
+      .forRoutes({ path: 'auctions', method: RequestMethod.POST })
+      .apply(SetSlugMiddleware)
+      .forRoutes({ path: 'auctions', method: RequestMethod.POST }, { path: 'auctions/:id', method: RequestMethod.PATCH });
   }
 }
