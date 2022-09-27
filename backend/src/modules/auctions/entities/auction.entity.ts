@@ -43,6 +43,9 @@ export class Auction {
   @Column({ type: 'varchar', length: 20 })
   public areaSize: string;
 
+  @Column({ type: 'varchar', length: 300, unique: true })
+  public slug: string;
+
   @Column({ type: 'varchar', length: 100, nullable: true })
   public investment?: string;
 

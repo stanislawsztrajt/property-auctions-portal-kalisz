@@ -1,3 +1,10 @@
+@import url("https://use.typekit.net/slh7fgx.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  font-family: poppins, sans-serif, monospace;
+  color: white;
+}

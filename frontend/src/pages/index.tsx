@@ -7,12 +7,12 @@ import { Iauction } from "@features/auctions/types";
 import AuctionsServices from "utils/api/auctions-services";
 
 interface Props {
-  auctions: Iauction[]
+  auctions: Iauction[];
 }
 
 const Home: NextPage<Props> = ({ auctions }: Props) => {
   return (
-    <div style={{ height: "100vh", width: "100vw" }}>
+    <div>
       <MapComponent auctions={auctions} />
     </div>
   );
@@ -21,11 +21,11 @@ const Home: NextPage<Props> = ({ auctions }: Props) => {
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const auctions = await AuctionsServices.getAll()
+  const auctions = await AuctionsServices.getAll();
 
   return {
     props: {
-      auctions
+      auctions,
     },
   };
 };
