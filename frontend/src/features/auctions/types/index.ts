@@ -7,13 +7,12 @@ export interface Iauction {
   slug: string;
   title: string;
   description: string;
-  category: Tcategory;
   price: string;
   location: string;
   locationLat: number;
   locationLng: number;
   phoneNumber: string;
-  type: string;
+  type: Tcategory;
   areaSize: string;
   investment?: string;
   rooms?: number;

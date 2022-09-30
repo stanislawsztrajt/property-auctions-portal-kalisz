@@ -1,45 +1,30 @@
 import React, { FC } from "react";
 import GoogleMapReact from "google-map-react";
-import MapMarkerItem from "../map-marker-item/map-marker-item";
-import { Iauction } from "@features/auctions/types";
+
 import useMapComponent from "./use-map-component";
 
-const defaultProps = {
-  center: {
-    lat: 51.7666636,
-    lng: 18.083333,
-  },
-  zoom: 13,
-};
+import { defaultMapProps } from "utils/constants/map";
+import { Iauction } from "@features/auctions/types";
 
 interface Props {
   auctions: Iauction[];
 }
 
 const MapComponent: FC<Props> = ({ auctions = [] }) => {
-  const { getLatLng } = useMapComponent();
-
-  const auctionsList = auctions.map((auction) => {
-    return (
-      <MapMarkerItem
-        key={auction.id}
-        lat={auction.locationLat}
-        lng={auction.locationLng}
-        auction={auction}
-        $hover
-      />
-    );
-  });
+  const { getLatLng, mapRef, handleZoomChange, clustersList } = useMapComponent(auctions);
 
   return (
     <div style={{ height: "100vh", width: "95vw" }}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: "" }}
-        defaultCenter={defaultProps.center}
-        defaultZoom={defaultProps.zoom}
+        defaultCenter={defaultMapProps.center}
+        defaultZoom={defaultMapProps.zoom}
         onClick={getLatLng}
+        yesIWantToUseGoogleMapApiInternals
+        onGoogleApiLoaded={(map) => (mapRef.current = map)}
+        onChange={({ zoom, bounds }) => handleZoomChange(zoom, bounds)}
       >
-        {auctionsList}
+        {clustersList}
       </GoogleMapReact>
     </div>
   );

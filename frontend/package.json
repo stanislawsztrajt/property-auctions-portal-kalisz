@@ -18,12 +18,15 @@
     "@reduxjs/toolkit": "^1.8.5",
     "axios": "^0.27.2",
     "google-map-react": "^2.2.0",
+    "log4js": "^6.6.1",
     "next": "12.3.1",
     "next-redux-wrapper": "^8.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-redux": "^8.0.2",
-    "slugify": "^1.6.5"
+    "slugify": "^1.6.5",
+    "supercluster": "^7.1.5",
+    "use-supercluster": "^0.4.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
