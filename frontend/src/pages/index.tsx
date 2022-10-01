@@ -4,7 +4,7 @@ import Head from "next/head";
 import Image from "next/image";
 import MapComponent from "@map/map-component";
 import { Iauction } from "@features/auctions/types";
-import AuctionsServices from 'utils/api/auctions-services';
+import AuctionsServices from "utils/api/auctions-services";
 
 interface Props {
   auctions: Iauction[];

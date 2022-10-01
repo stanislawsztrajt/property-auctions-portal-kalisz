@@ -5,3 +5,8 @@ export interface Imarker {
   lng: number;
   auction: Iauction;
 }
+
+export interface Ilocation {
+  lat: number;
+  lng: number;
+}

@@ -1,4 +1,3 @@
-import TailwindValues from './tailwind-values'
+import TailwindValues from "./tailwind-values";
 
-export { TailwindValues }
-    
+export { TailwindValues };
