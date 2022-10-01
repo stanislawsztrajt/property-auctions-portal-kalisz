@@ -4,14 +4,15 @@ import GoogleMapReact from "google-map-react";
 import useMapComponent from "./use-map-component";
 
 import { defaultMapProps } from "utils/constants/map";
-import { Iauction } from "@features/auctions/types";
+import { ImapAuction } from "@features/auctions/types";
 
 interface Props {
-  auctions: Iauction[];
+  auctions: ImapAuction[];
 }
 
 const MapComponent: FC<Props> = ({ auctions = [] }) => {
-  const { getLatLng, mapRef, handleZoomChange, clustersList } = useMapComponent(auctions);
+  const { getLatLng, mapRef, handleZoomChange, clustersList, zoom, center } =
+    useMapComponent(auctions);
 
   return (
     <div style={{ height: "100vh", width: "95vw" }}>
@@ -19,6 +20,8 @@ const MapComponent: FC<Props> = ({ auctions = [] }) => {
         bootstrapURLKeys={{ key: "" }}
         defaultCenter={defaultMapProps.center}
         defaultZoom={defaultMapProps.zoom}
+        zoom={zoom}
+        center={center}
         onClick={getLatLng}
         yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={(map) => (mapRef.current = map)}

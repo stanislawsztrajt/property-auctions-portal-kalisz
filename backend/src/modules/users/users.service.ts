@@ -27,7 +27,7 @@ export class UsersService {
   }
 
   findOne(id: number) {
-    return this.userRepository.find({ where: { id }, relations: { auctions: true } });
+    return this.userRepository.findOne({ where: { id }, relations: { auctions: true } });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
