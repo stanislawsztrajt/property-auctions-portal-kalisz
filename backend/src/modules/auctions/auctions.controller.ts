@@ -13,24 +13,24 @@ import { OwnerGuard } from 'modules/auth/guards/owner.guard';
 import { AuctionsService } from './auctions.service';
 import { CreateAuctionDto } from './dto/create-auction.dto';
 import { UpdateAuctionDto } from './dto/update-auction.dto';
-
+import { IinRangeBody } from './types';
 
 @Controller('auctions')
 export class AuctionsController {
   constructor(private readonly auctionsService: AuctionsService) {}
 
-
-  @Get('in-range/:range/:startRange')
+  @Post('in-range/:startRange/:range')
   findInRange(
+    @Param('startRange') startRange: number,
     @Param('range') range: number,
-    @Param('startRange') startRange: number
+    @Body() body: IinRangeBody
   ) {
-    return this.auctionsService.findInRange(range, startRange);
+    return this.auctionsService.findInRange(startRange, range, body);
   }
 
-  @Get('user/:userId')
-  findUserAuctions(@Param('userId') userId: number) {
-    return this.auctionsService.findUserAuctions(userId);
+  @Get('slug/:slug')
+  findOneBySlug(@Param('slug') slug: string) {
+    return this.auctionsService.findOneBySlug(slug);
   }
 
   @Get('slug/:slug')

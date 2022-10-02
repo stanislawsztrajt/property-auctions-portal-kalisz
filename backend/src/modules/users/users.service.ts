@@ -18,7 +18,10 @@ export class UsersService {
       newUser.roles = [Role.USER];
       return await this.userRepository.save(newUser);
     } catch {
-      throw new HttpException('Username or Email already exist', HttpStatus.BAD_REQUEST)
+      throw new HttpException(
+        'Username or Email already exist',
+        HttpStatus.BAD_REQUEST
+      );
     }
   }
 
@@ -27,14 +30,20 @@ export class UsersService {
   }
 
   findOne(id: number) {
-    return this.userRepository.findOne({ where: { id }, relations: { auctions: true } });
+    return this.userRepository.findOne({
+      where: { id },
+      relations: { auctions: true, savedAuctions: true },
+    });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
     try {
       return await this.userRepository.update(id, updateUserDto);
     } catch {
-      throw new HttpException('Username or Email already exist', HttpStatus.BAD_REQUEST)
+      throw new HttpException(
+        'Username or Email already exist',
+        HttpStatus.BAD_REQUEST
+      );
     }
   }
 
