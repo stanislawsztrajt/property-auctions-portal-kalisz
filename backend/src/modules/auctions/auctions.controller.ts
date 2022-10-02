@@ -33,6 +33,11 @@ export class AuctionsController {
     return this.auctionsService.findOneBySlug(slug);
   }
 
+  @Get('slug/:slug')
+  findBySlug(@Param('slug') slug: string) {
+    return this.auctionsService.findBySlug(slug);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createAuctionDto: CreateAuctionDto) {
