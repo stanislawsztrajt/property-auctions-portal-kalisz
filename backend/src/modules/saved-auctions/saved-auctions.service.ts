@@ -14,13 +14,6 @@ export class SavedAuctionsService {
     private readonly auctionRepository: Repository<Auction>
   ) {}
 
-  findUserSavedAuctions(userId: number) {
-    return this.savedAuctionRepository.find({
-      where: { user: { id: userId } },
-      relations: { auction: true },
-    });
-  }
-
   async create(createSavedAuctionDto: CreateSavedAuctionDto) {
     const auction = await this.auctionRepository.findOneBy({
       id: createSavedAuctionDto.auctionId,
