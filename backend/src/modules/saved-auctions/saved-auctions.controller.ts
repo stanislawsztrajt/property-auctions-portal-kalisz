@@ -16,11 +16,6 @@ import { JwtAuthGuard } from 'modules/auth/guards/jwt-auth.guard';
 export class SavedAuctionsController {
   constructor(private readonly savedAuctionsService: SavedAuctionsService) {}
 
-  @Get('user/:userId')
-  findUserSavedAuctions(@Param('userId') userId: number) {
-    return this.savedAuctionsService.findUserSavedAuctions(userId);
-  }
-
   @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createSavedAuctionDto: CreateSavedAuctionDto) {

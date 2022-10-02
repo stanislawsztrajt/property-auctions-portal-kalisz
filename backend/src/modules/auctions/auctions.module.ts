@@ -8,9 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SetSlugMiddleware } from './middlewares/set-slug.middleware';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Auction])
-  ],
+  imports: [TypeOrmModule.forFeature([Auction])],
   controllers: [AuctionsController],
   providers: [AuctionsService, JwtService],
 })
@@ -20,6 +18,9 @@ export class AuctionsModule {
       .apply(SetOwnerMiddleware)
       .forRoutes({ path: 'auctions', method: RequestMethod.POST })
       .apply(SetSlugMiddleware)
-      .forRoutes({ path: 'auctions', method: RequestMethod.POST }, { path: 'auctions/:id', method: RequestMethod.PATCH });
+      .forRoutes(
+        { path: 'auctions', method: RequestMethod.POST },
+        { path: 'auctions/:id', method: RequestMethod.PATCH }
+      );
   }
 }

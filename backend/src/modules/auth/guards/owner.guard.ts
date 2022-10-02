@@ -37,7 +37,11 @@ export class OwnerGuard implements CanActivate {
     const coleectionName = collectionData[0].replaceAll('-', '_').slice(0, -1);
     const coleectionId = collectionData[1];
 
-    if (coleectionName === 'user' && user.id !== Number(coleectionId) && !checkIsUserIsAdmin(user.roles)) {
+    if (
+      coleectionName === 'user' &&
+      user.id !== Number(coleectionId) &&
+      !checkIsUserIsAdmin(user.roles)
+    ) {
       throw new HttpException('FORBIDDEN', HttpStatus.FORBIDDEN);
     }
 

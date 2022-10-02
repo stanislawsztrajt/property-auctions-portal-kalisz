@@ -1,20 +1,24 @@
 import { IsavedAuction } from "@features/saved-auctions/types";
-import { Iuser } from "@features/users/types";
 import { Tcategory } from "utils/types";
 
-export interface Iauction {
+export interface ImapAuction {
   id: number;
   slug: string;
   title: string;
-  description: string;
-  category: Tcategory;
   price: string;
-  location: string;
   locationLat: number;
   locationLng: number;
-  phoneNumber: string;
-  type: string;
   areaSize: string;
+  type: Tcategory;
+  user: {
+    username: string;
+  };
+}
+
+export interface Iauction extends ImapAuction {
+  description: string;
+  location: string;
+  phoneNumber: string;
   investment?: string;
   rooms?: number;
   level?: number;
@@ -23,6 +27,12 @@ export interface Iauction {
   parkingSpace?: boolean;
   createdAt: Date;
   updatedAt: Date;
-  user?: Iuser;
   savedAuctions?: IsavedAuction[];
+}
+
+export interface IinRangeBody extends Iauction {
+  sort: {
+    name: string,
+    by: 'ASC' | 'DESC'
+  }
 }

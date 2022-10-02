@@ -1,1 +1,1 @@
-export { default } from './tailwind-values'
+export { default } from "./tailwind-values";

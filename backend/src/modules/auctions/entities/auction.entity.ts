@@ -29,7 +29,7 @@ export class Auction {
   public location: string;
 
   @Column({ type: 'float' })
-  public locationLat: number
+  public locationLat: number;
 
   @Column({ type: 'float' })
   public locationLng: number;
