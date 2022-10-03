@@ -29,3 +29,10 @@ export interface Iauction extends ImapAuction {
   updatedAt: Date;
   savedAuctions?: IsavedAuction[];
 }
+
+export interface IinRangeBody extends Iauction {
+  sort: {
+    name: string,
+    by: 'ASC' | 'DESC'
+  }
+}

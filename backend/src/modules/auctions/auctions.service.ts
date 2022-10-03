@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { CreateAuctionDto } from './dto/create-auction.dto';
 import { UpdateAuctionDto } from './dto/update-auction.dto';
 import { Auction } from './entities/auction.entity';
-
+import { IinRangeBody } from './types';
 
 @Injectable()
 export class AuctionsService {
@@ -13,14 +13,35 @@ export class AuctionsService {
     private readonly auctionRepository: Repository<Auction>
   ) {}
 
+  findInRange(startRange: number, range: number, body: IinRangeBody) {
+    let query = `
+      SELECT auction.id, auction.slug, auction.title, auction.price, auction.type, auction."areaSize", auction."locationLat", auction."locationLng",
+      json_build_object('username', public.user.username) as user
+      FROM auction
+      LEFT JOIN public.user
+      ON auction."userId" = public.user.id
+      `;
 
-  findInRange(range: number, startRange: number) {
-    const query = `SELECT * FROM auction LIMIT ${range} OFFSET ${startRange}`;
+    Object.entries(body).forEach(([key, value], index) => {
+      if (key === 'sort') return
+
+      query +=
+        `${index === 0 ? ' WHERE' : ' AND'}
+        auction."${key}" LIKE '%${value}%' `
+    });
+
+    query +=
+    `${body.sort ? `ORDER BY auction."${body.sort.name}" ${body.sort.by}` : ''}
+    LIMIT ${range} OFFSET ${startRange}`;
+
     return this.auctionRepository.query(query);
   }
 
-  findUserAuctions(userId: number) {
-    return this.auctionRepository.findBy({ user: { id: userId } });
+  findOneBySlug(slug: string) {
+    return this.auctionRepository.findOne({
+      where: { slug },
+      relations: { user: true },
+    });
   }
 
   findBySlug(slug: string) {
@@ -32,7 +53,10 @@ export class AuctionsService {
       const newAuction = this.auctionRepository.create(createAuctionDto);
       return await this.auctionRepository.save(newAuction);
     } catch {
-      throw new HttpException('Title or description already exist', HttpStatus.BAD_REQUEST)
+      throw new HttpException(
+        'Title or description already exist',
+        HttpStatus.BAD_REQUEST
+      );
     }
   }
 
@@ -44,8 +68,8 @@ export class AuctionsService {
       ON auction."userId" = public.user.id
       GROUP BY auction.id, auction.slug, auction.title, auction.price, auction."locationLat",  auction."locationLng", public.user.username
       ORDER BY auction.id
-    `
-    return await this.auctionRepository.query(query)
+    `;
+    return await this.auctionRepository.query(query);
   }
 
   findOne(id: number) {
@@ -59,7 +83,10 @@ export class AuctionsService {
     try {
       return await this.auctionRepository.update(id, updateAuctionDto);
     } catch {
-      throw new HttpException('Title or description already exist', HttpStatus.BAD_REQUEST)
+      throw new HttpException(
+        'Title or description already exist',
+        HttpStatus.BAD_REQUEST
+      );
     }
   }
 

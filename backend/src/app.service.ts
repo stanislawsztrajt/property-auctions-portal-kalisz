@@ -10,7 +10,7 @@ export class AppService {
         '/api/auctions',
         '/api/saved-auctions',
         '/api/auth/login',
-      ]
+      ],
     };
   }
 }
