@@ -63,7 +63,7 @@ export class AuctionsService {
       LEFT JOIN public.user
       ON auction."userId" = public.user.id
       GROUP BY auction.id, auction.slug, auction.title, auction.price, auction."locationLat",  auction."locationLng", public.user.username
-      ORDER BY auction.id
+      ORDER BY auction.id DESC
     `;
     return await this.auctionRepository.query(query);
   }

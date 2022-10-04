@@ -1,19 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import type { GetServerSideProps, NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import MapComponent from "@map/map-component";
-import { Iauction } from "@features/auctions/types";
-import AuctionsServices from "utils/api/auctions-services";
+import { MapComponent } from "@features/map";
+import MapSearchOptions from "@features/map/map-search-options";
+import { ImapAuction } from "@features/auctions/types";
+import { AuctionsServices } from "utils/api";
+
 
 interface Props {
-  auctions: Iauction[];
+  auctions: ImapAuction[];
 }
 
-const Home: NextPage<Props> = ({ auctions }: Props) => {
+const Home: NextPage<Props> = ({ auctions: allAuctions }: Props) => {
+  const [auctions, setAuctions] = useState(allAuctions)
+  console.log(allAuctions)
+
   return (
-    <div>
-      <MapComponent auctions={auctions} />
+    <div className='w-screen h-screen'>
+      <MapSearchOptions />
+      <div className='w-3/4 h-3/4'>
+        <MapComponent auctions={allAuctions} />
+      </div>
     </div>
   );
 };
@@ -21,7 +27,7 @@ const Home: NextPage<Props> = ({ auctions }: Props) => {
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const auctions = await AuctionsServices.getAll();
+  const auctions: ImapAuction[] = await AuctionsServices.getAll();
 
   return {
     props: {

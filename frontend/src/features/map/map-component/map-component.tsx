@@ -15,21 +15,19 @@ const MapComponent: FC<Props> = ({ auctions = [] }) => {
     useMapComponent(auctions);
 
   return (
-    <div style={{ height: "100vh", width: "95vw" }}>
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: "" }}
-        defaultCenter={defaultMapProps.center}
-        defaultZoom={defaultMapProps.zoom}
-        zoom={zoom}
-        center={center}
-        onClick={getLatLng}
-        yesIWantToUseGoogleMapApiInternals
-        onGoogleApiLoaded={(map) => (mapRef.current = map)}
-        onChange={({ zoom, bounds }) => handleZoomChange(zoom, bounds)}
-      >
-        {clustersList}
-      </GoogleMapReact>
-    </div>
+    <GoogleMapReact
+      bootstrapURLKeys={{ key: "" }}
+      defaultCenter={defaultMapProps.center}
+      defaultZoom={defaultMapProps.zoom}
+      zoom={zoom}
+      center={center}
+      onClick={getLatLng}
+      yesIWantToUseGoogleMapApiInternals
+      onGoogleApiLoaded={(map) => (mapRef.current = map)}
+      onChange={({ zoom, bounds }) => handleZoomChange(zoom, bounds)}
+    >
+      {clustersList}
+    </GoogleMapReact>
   );
 };
 
