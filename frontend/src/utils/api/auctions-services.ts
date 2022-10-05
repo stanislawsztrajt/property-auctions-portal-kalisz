@@ -5,7 +5,11 @@ import { authHeader } from "utils/constants";
 const url = `${process.env.NEXT_PUBLIC_API_URL}/auctions`;
 
 export class AuctionsServices {
-  async getInRangeWithFilterAndSort(startRange: number, range: number, body?: IinRangeBody): Promise<ImapAuction[]> {
+  async getInRangeWithFilterAndSort(
+    startRange: number,
+    range: number,
+    body?: IinRangeBody
+  ): Promise<ImapAuction[]> {
     // body is auction entries with an additional sort object { sort: { name: string, by: "ASC" | "DESC" } }
     const { data } = await axios.post(`${url}/in-range/${startRange}/${range}`, body);
     return data;

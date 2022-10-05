@@ -1,10 +1,9 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import MapSearchFilters from './map-search-filters';
+import React from "react";
+import { render } from "@testing-library/react";
+import MapSearchFilters from "./map-search-filters";
 
-test('should render MapSearchFilters', () => {
+test("should render MapSearchFilters", () => {
   const { getByText } = render(<MapSearchFilters />);
 
-  expect(getByText('')).toBeInTheDocument();
+  expect(getByText("")).toBeInTheDocument();
 });
-  

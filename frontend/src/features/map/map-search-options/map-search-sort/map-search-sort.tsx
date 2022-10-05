@@ -1,25 +1,24 @@
-import { useRouter } from 'next/router'
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC } from "react";
+import useMapSearchSort from "./use-map-search-sort";
 
 const MapSearchSort: FC = () => {
-  const router = useRouter()
-  const [selectedOption, setSelectedOption] = useState('')
-  const [isFirstTime, setIsFirstTime] = useState(false);
-  useEffect(() => {
-    if (isFirstTime) {
-      router.push({ pathname: '/', query: { ...router.query, sort: selectedOption } })
-    }
-    else setIsFirstTime(true)
-  }, [selectedOption])
-  
-  return(
-    <select onChange={e => setSelectedOption(e.target.value)} name="sortOptions" id="sortOptions">
-      <option defaultChecked value='{ "sort": { "by": "DESC", "name": "createdAt" } }'>Najnowsze</option>
-      <option value='{ "sort": { "by": "ASC", "name": "createdAt" } }'>Najstarsze</option>
-      <option value='{ "sort": { "by": "DESC", "name": "price" } }'>Najdroższe</option>
-      <option value='{ "sort": { "by": "ASC", "name": "price" } }'>Najtańsze</option>
-    </select>
-  )
-}
+  const { selectedOption, setSelectedOption } = useMapSearchSort();
 
-export default MapSearchSort
+  return (
+    <select
+      value={selectedOption}
+      onChange={(e) => setSelectedOption(e.target.value)}
+      name="sortOptions"
+      id="sortOptions"
+    >
+      <option defaultChecked value='{ "by": "DESC", "name": "createdAt" }'>
+        Najnowsze
+      </option>
+      <option value='{ "by": "ASC", "name": "createdAt" }'>Najstarsze</option>
+      <option value='{ "by": "DESC", "name": "price" }'>Najdroższe</option>
+      <option value='{ "by": "ASC", "name": "price" }'>Najtańsze</option>
+    </select>
+  );
+};
+
+export default MapSearchSort;

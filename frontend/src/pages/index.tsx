@@ -4,22 +4,22 @@ import { MapComponent } from "@features/map";
 import MapSearchOptions from "@features/map/map-search-options";
 import { ImapAuction } from "@features/auctions/types";
 import { AuctionsServices } from "utils/api";
-
+import { AuctionList } from "@features/auctions";
 
 interface Props {
   auctions: ImapAuction[];
 }
 
 const Home: NextPage<Props> = ({ auctions: allAuctions }: Props) => {
-  const [auctions, setAuctions] = useState(allAuctions)
-  console.log(allAuctions)
+  const [auctions, setAuctions] = useState(allAuctions);
 
   return (
-    <div className='w-screen h-screen'>
-      <MapSearchOptions />
-      <div className='w-3/4 h-3/4'>
-        <MapComponent auctions={allAuctions} />
+    <div className="w-screen h-screen">
+      <MapSearchOptions setAuctions={setAuctions} />
+      <div className="w-3/4 h-3/4">
+        <MapComponent auctions={auctions} />
       </div>
+      <AuctionList auctions={auctions} />
     </div>
   );
 };
