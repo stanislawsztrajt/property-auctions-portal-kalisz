@@ -32,7 +32,7 @@ export interface Iauction extends ImapAuction {
 
 export interface IinRangeBody extends Iauction {
   sort: {
-    name: string,
-    by: 'ASC' | 'DESC'
-  }
+    name: string;
+    by: "ASC" | "DESC";
+  };
 }

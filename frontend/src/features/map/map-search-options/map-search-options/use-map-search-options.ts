@@ -1,14 +1,33 @@
-import { useRouter } from "next/router"
-import { useEffect } from "react"
+import { IinRangeBody, ImapAuction } from "@features/auctions/types";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { AuctionsServices } from "utils/api";
+import { Props } from "./map-search-options";
 
-const useMapSearchOptions = () => {
-  const router = useRouter()
+const useMapSearchOptions = ({ setAuctions }: Props) => {
+  const router = useRouter();
+
   useEffect(() => {
-    console.log(router.query)
-    console.log(window.location.href)
-  }, [router.query])
+    const fetchAuctions = async () => {
+      let sort;
+      if (router.query.sort) {
+        sort = JSON.parse(String(router.query.sort));
+      }
 
-  return {}
-}
+      const body = { ...router.query, sort } as object as IinRangeBody;
 
-export default useMapSearchOptions
+      const auctions: ImapAuction[] = await AuctionsServices.getInRangeWithFilterAndSort(
+        0,
+        20,
+        body
+      );
+      setAuctions(auctions);
+    };
+
+    fetchAuctions();
+  }, [router.query]);
+
+  return {};
+};
+
+export default useMapSearchOptions;

@@ -1,17 +1,21 @@
-import React, { FC } from 'react'
-import { MapSearchInput, MapSearchFilters, MapSearchSort } from '../'
-import useMapSearchOptions from './use-map-search-options'
+import { ImapAuction } from "@features/auctions/types";
+import React, { FC } from "react";
+import { MapSearchInput, MapSearchFilters, MapSearchSort } from "../";
+import useMapSearchOptions from "./use-map-search-options";
 
-const MapSearchOptions: FC = () => {
-  useMapSearchOptions()
-  return(
+export interface Props {
+  setAuctions: React.Dispatch<React.SetStateAction<ImapAuction[]>>;
+}
+
+const MapSearchOptions: FC<Props> = ({ setAuctions }) => {
+  useMapSearchOptions({ setAuctions });
+  return (
     <div>
       <MapSearchInput />
       <MapSearchFilters />
       <MapSearchSort />
     </div>
-  )
-}
+  );
+};
 
-export default MapSearchOptions
-  
+export default MapSearchOptions;

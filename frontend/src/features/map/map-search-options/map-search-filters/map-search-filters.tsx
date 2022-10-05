@@ -1,12 +1,7 @@
-import React, { FC } from 'react'
+import React, { FC } from "react";
 
 const MapSearchFilters: FC = () => {
-  return(
-    <>
-      MapSearchFilters
-    </>
-  )
-}
+  return <>MapSearchFilters</>;
+};
 
-export default MapSearchFilters
-  
+export default MapSearchFilters;

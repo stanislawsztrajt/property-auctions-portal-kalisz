@@ -1,1 +1,1 @@
-export { default } from "./map-search-sort"
+export { default } from "./map-search-sort";

@@ -1,6 +1,5 @@
 const useMapSearchFilters = () => {
-  return {}
-}
+  return {};
+};
 
-export default useMapSearchFilters
-  
+export default useMapSearchFilters;

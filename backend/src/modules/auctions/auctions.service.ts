@@ -22,17 +22,20 @@ export class AuctionsService {
       ON auction."userId" = public.user.id
       `;
 
-    Object.entries(body).forEach(([key, value], index) => {
-      if (key === 'sort') return
-
-      query +=
-        `${index === 0 ? ' WHERE' : ' AND'}
-        auction."${key}" LIKE '%${value}%' `
+    const entries = Object.entries(body).filter(([key]) => key !== 'sort');
+    entries.forEach(([key, value], index) => {
+      query += `${
+        index === 0 ? ' WHERE' : ' AND'
+      } auction."${key}" iLIKE '%${value}%' `;
     });
 
-    query +=
-    `${body.sort ? `ORDER BY auction."${body.sort.name}" ${body.sort.by}` : ''}
+    query += `${
+      body?.sort
+        ? `ORDER BY auction."${body.sort.name}" ${body.sort.by}`
+        : 'ORDER BY auction.id DESC'
+    }
     LIMIT ${range} OFFSET ${startRange}`;
+    console.log(query);
 
     return this.auctionRepository.query(query);
   }
@@ -45,7 +48,10 @@ export class AuctionsService {
   }
 
   findBySlug(slug: string) {
-    return this.auctionRepository.find({ where: { slug }, relations: { user: true } });
+    return this.auctionRepository.find({
+      where: { slug },
+      relations: { user: true },
+    });
   }
 
   async create(createAuctionDto: CreateAuctionDto) {

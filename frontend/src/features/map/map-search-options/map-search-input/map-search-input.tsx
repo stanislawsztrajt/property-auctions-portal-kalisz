@@ -1,14 +1,19 @@
-import React, { FC } from 'react'
-import useMapSearchInput from './use-map-search-input'
+import React, { FC } from "react";
+import useMapSearchInput from "./use-map-search-input";
 
 const MapSearchInput: FC = () => {
-  const { setValue } = useMapSearchInput()
+  const { value, setValue } = useMapSearchInput();
 
-  return(
+  return (
     <>
-      <input type="text" onChange={(e) => setValue(e.target.value)} placeholder='Search' />
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        placeholder="Search"
+      />
     </>
-  )
-}
+  );
+};
 
-export default MapSearchInput
+export default MapSearchInput;
