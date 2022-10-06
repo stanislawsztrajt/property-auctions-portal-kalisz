@@ -5,6 +5,7 @@ import MapSearchOptions from "@features/map/map-search-options";
 import { ImapAuction } from "@features/auctions/types";
 import { AuctionsServices } from "utils/api";
 import { AuctionList } from "@features/auctions";
+import { Header } from "@features/ui";
 
 interface Props {
   auctions: ImapAuction[];
@@ -14,13 +15,16 @@ const Home: NextPage<Props> = ({ auctions: allAuctions }: Props) => {
   const [auctions, setAuctions] = useState(allAuctions);
 
   return (
-    <div className="w-screen h-screen">
-      <MapSearchOptions setAuctions={setAuctions} />
-      <div className="w-3/4 h-3/4">
+    <main className="h-screen overflow-y-hidden">
+      <section className='h-1/6'>
+        <Header />
+        <MapSearchOptions setAuctions={setAuctions} />
+      </section>
+      <section className='flex flex-row h-5/6'>
+        <AuctionList auctions={auctions} />
         <MapComponent auctions={auctions} />
-      </div>
-      <AuctionList auctions={auctions} />
-    </div>
+      </section>
+    </main>
   );
 };
 
