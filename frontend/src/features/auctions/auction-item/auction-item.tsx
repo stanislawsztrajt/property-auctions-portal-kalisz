@@ -7,7 +7,7 @@ interface Props {
 
 const AuctionItem: FC<Props> = ({ auction }) => {
   return (
-    <div>
+    <div className='p-4 border'>
       <h2>{auction.title}</h2>
       <h2>{auction.id}</h2>
       <div>{auction.price}</div>

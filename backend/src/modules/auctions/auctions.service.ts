@@ -35,7 +35,6 @@ export class AuctionsService {
         : 'ORDER BY auction.id DESC'
     }
     LIMIT ${range} OFFSET ${startRange}`;
-    console.log(query);
 
     return this.auctionRepository.query(query);
   }

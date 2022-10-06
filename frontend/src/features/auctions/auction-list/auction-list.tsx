@@ -11,7 +11,7 @@ const AuctionList: FC<Props> = ({ auctions }) => {
     return <AuctionItem key={auction.id} auction={auction} />;
   });
 
-  return <section className="">{auctionsList}</section>;
+  return <section className="w-1/2 h-full overflow-scroll overflow-x-hidden">{auctionsList}</section>;
 };
 
 export default AuctionList;
