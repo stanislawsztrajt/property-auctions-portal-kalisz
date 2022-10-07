@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 
 const MapSearchFilters: FC = () => {
-  return <>MapSearchFilters</>;
+  return <button className="button-secondary">Więcej filtrów</button>;
 };
 
 export default MapSearchFilters;

@@ -15,7 +15,7 @@ const MapComponent: FC<Props> = ({ auctions = [] }) => {
     useMapComponent(auctions);
 
   return (
-    <div className='w-1/2 h-full text-white'>
+    <div className="w-1/2 h-full text-white">
       <GoogleMapReact
         bootstrapURLKeys={{ key: "" }}
         defaultCenter={defaultMapProps.center}

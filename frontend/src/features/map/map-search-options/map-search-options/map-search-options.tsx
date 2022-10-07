@@ -10,7 +10,7 @@ export interface Props {
 const MapSearchOptions: FC<Props> = ({ setAuctions }) => {
   useMapSearchOptions({ setAuctions });
   return (
-    <div className='flex flex-row items-center ml-4 h-1/2 gap-x-20'>
+    <div className="flex flex-row items-center ml-4 h-1/2 gap-x-4">
       <MapSearchInput />
       <MapSearchSort />
       <MapSearchFilters />

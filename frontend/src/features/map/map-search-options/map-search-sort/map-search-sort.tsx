@@ -10,6 +10,7 @@ const MapSearchSort: FC = () => {
       onChange={(e) => setSelectedOption(e.target.value)}
       name="sortOptions"
       id="sortOptions"
+      className="px-4 pb-1 mt-1 text-lg duration-100 border-b-2 outline-none focus:border-border-primary-focus"
     >
       <option defaultChecked value='{ "by": "DESC", "name": "createdAt" }'>
         Najnowsze
