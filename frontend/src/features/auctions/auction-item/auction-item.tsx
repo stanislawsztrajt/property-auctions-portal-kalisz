@@ -1,4 +1,9 @@
+import { faCalendarDays, faChartArea, faHouse, faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
+import Link from "next/link";
 import React, { FC } from "react";
+import { parseDateFns } from "utils/helpers";
 import { ImapAuction } from "../types";
 
 interface Props {
@@ -6,15 +11,56 @@ interface Props {
 }
 
 const AuctionItem: FC<Props> = ({ auction }) => {
+  const price = Number(auction.price.split(" ").splice(0, 1)[0]);
+  const priceType = auction.price.split(" ").splice(1, 1)[0];
+  const area = Number(auction.areaSize.split(" ").splice(0, 1)[0]);
+  const areaType = auction.areaSize.split(" ").splice(1, 1)[0];
+
   return (
-    <div className='p-4 border'>
-      <h2>{auction.title}</h2>
-      <h2>{auction.id}</h2>
-      <div>{auction.price}</div>
-      <div>{auction.areaSize}</div>
-      <div>{auction.user.username}</div>
-      <div>{auction.type}</div>
-    </div>
+    <Link href={`/auctions/${auction.slug}`}>
+      <div className="p-6 border-t cursor-pointer">
+        <div className="flex flex-row justify-between">
+          <div className="flex flex-row">
+            <Image
+              loading="lazy"
+              width={"100%"}
+              height={"100%"}
+              src="https://pbs.twimg.com/profile_images/1285655593592791040/HtwPZgej_400x400.jpg"
+              alt="property image"
+            />
+            <div className="flex flex-col ml-4">
+              <h2 className="text-2xl font-medium">{auction.title}</h2>
+              <h3 className="">
+                <FontAwesomeIcon className="mr-1" icon={faCalendarDays} />
+                {parseDateFns(auction.createdAt)}
+              </h3>
+            </div>
+          </div>
+          <div className="flex flex-col gap-1 text-center">
+            <div className="text-3xl text-text-secondary-strong">{auction.price}</div>
+            <div className="flex gap-4 ">
+              <div className="text-xl">
+                <FontAwesomeIcon className="mr-1" icon={faChartArea} />
+                {auction.areaSize}
+              </div>
+              <div className="text-lg">
+                {~~(price / area)} {priceType}/{areaType}
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <div className="text-sm">
+                <FontAwesomeIcon className="mr-1" icon={faUser} />
+                {auction.user.username}
+              </div>
+              <div className="text-sm">
+                <FontAwesomeIcon className="mr-1" icon={faHouse} />
+                {auction.type}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Link>
   );
 };
 

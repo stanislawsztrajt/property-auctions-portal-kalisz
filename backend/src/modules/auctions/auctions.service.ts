@@ -15,7 +15,7 @@ export class AuctionsService {
 
   findInRange(startRange: number, range: number, body: IinRangeBody) {
     let query = `
-      SELECT auction.id, auction.slug, auction.title, auction.price, auction.type, auction."areaSize", auction."locationLat", auction."locationLng",
+      SELECT auction.id, auction.slug, auction.title, auction.price, auction.type, auction."createdAt", auction."areaSize", auction."locationLat", auction."locationLng",
       json_build_object('username', public.user.username) as user
       FROM auction
       LEFT JOIN public.user
@@ -67,11 +67,10 @@ export class AuctionsService {
 
   async findAll() {
     const query = `
-      SELECT auction.id, auction.slug, auction.title, auction.price, auction.type, auction."areaSize", auction."locationLat", auction."locationLng", json_build_object('username', public.user.username) as user
+      SELECT auction.id, auction.slug, auction.title, auction.price, auction.type, auction."createdAt", auction."areaSize", auction."locationLat", auction."locationLng", json_build_object('username', public.user.username) as user
       FROM auction
       LEFT JOIN public.user
       ON auction."userId" = public.user.id
-      GROUP BY auction.id, auction.slug, auction.title, auction.price, auction."locationLat",  auction."locationLng", public.user.username
       ORDER BY auction.id DESC
     `;
     return await this.auctionRepository.query(query);

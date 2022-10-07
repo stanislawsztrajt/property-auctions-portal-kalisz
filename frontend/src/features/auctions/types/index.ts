@@ -10,6 +10,7 @@ export interface ImapAuction {
   locationLng: number;
   areaSize: string;
   type: Tcategory;
+  createdAt: Date;
   user: {
     username: string;
   };
@@ -25,7 +26,6 @@ export interface Iauction extends ImapAuction {
   rent?: string;
   additions?: string;
   parkingSpace?: boolean;
-  createdAt: Date;
   updatedAt: Date;
   savedAuctions?: IsavedAuction[];
 }

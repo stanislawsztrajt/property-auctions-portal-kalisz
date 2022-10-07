@@ -16,11 +16,11 @@ const Home: NextPage<Props> = ({ auctions: allAuctions }: Props) => {
 
   return (
     <main className="h-screen overflow-y-hidden">
-      <section className='h-1/6'>
+      <section className="h-1/6">
         <Header />
         <MapSearchOptions setAuctions={setAuctions} />
       </section>
-      <section className='flex flex-row h-5/6'>
+      <section className="flex flex-row h-5/6">
         <AuctionList auctions={auctions} />
         <MapComponent auctions={auctions} />
       </section>

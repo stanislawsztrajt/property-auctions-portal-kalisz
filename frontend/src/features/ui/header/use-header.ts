@@ -1,6 +1,5 @@
 const useHeader = () => {
-  return {}
-}
+  return {};
+};
 
-export default useHeader
-  
+export default useHeader;
