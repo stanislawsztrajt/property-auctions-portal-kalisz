@@ -4,9 +4,9 @@ import React, { FC } from "react";
 
 const Header: FC = () => {
   return (
-    <header className="text-gray-600 h-1/2 body-font">
-      <div className="container flex flex-col flex-wrap items-center p-5 mx-auto md:flex-row">
-        <a className="flex items-center mb-4 font-medium text-gray-900 title-font md:mb-0">
+    <header className="text-gray-600 body-font h-1/12">
+      <div className="container flex flex-col flex-wrap items-center p-4 mx-auto md:flex-row">
+        <a href="/" className="flex items-center mb-4 font-medium text-gray-900 title-font md:mb-0">
           <FontAwesomeIcon
             className="w-10 h-10 p-2 text-white bg-indigo-500 rounded-full"
             icon={faBuildingWheat}

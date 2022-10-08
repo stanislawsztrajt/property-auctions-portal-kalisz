@@ -15,7 +15,7 @@ export class AuctionsService {
 
   findInRange(startRange: number, range: number, body: IinRangeBody) {
     let query = `
-      SELECT auction.id, auction.slug, auction.title, auction.price, auction.type, auction."createdAt", auction."areaSize", auction."locationLat", auction."locationLng",
+      SELECT auction.id, auction.slug, auction.title, auction.price, auction.type, auction."priceType", auction."createdAt", auction."areaSize", auction."locationLat", auction."locationLng",
       json_build_object('username', public.user.username) as user
       FROM auction
       LEFT JOIN public.user
@@ -40,6 +40,7 @@ export class AuctionsService {
   }
 
   findOneBySlug(slug: string) {
+    console.log(slug)
     return this.auctionRepository.findOne({
       where: { slug },
       relations: { user: true },
@@ -67,7 +68,7 @@ export class AuctionsService {
 
   async findAll() {
     const query = `
-      SELECT auction.id, auction.slug, auction.title, auction.price, auction.type, auction."createdAt", auction."areaSize", auction."locationLat", auction."locationLng", json_build_object('username', public.user.username) as user
+      SELECT auction.id, auction.slug, auction.title, auction.price, auction."priceType", auction.type, auction."createdAt", auction."areaSize", auction."locationLat", auction."locationLng", json_build_object('username', public.user.username) as user
       FROM auction
       LEFT JOIN public.user
       ON auction."userId" = public.user.id

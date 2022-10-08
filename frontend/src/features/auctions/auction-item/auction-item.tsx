@@ -11,9 +11,9 @@ interface Props {
 }
 
 const AuctionItem: FC<Props> = ({ auction }) => {
-  const price = Number(auction.price.split(" ").splice(0, 1)[0]);
+  const price = +auction.price.split(" ").splice(0, 1)[0];
   const priceType = auction.price.split(" ").splice(1, 1)[0];
-  const area = Number(auction.areaSize.split(" ").splice(0, 1)[0]);
+  const area = +auction.areaSize.split(" ").splice(0, 1)[0];
   const areaType = auction.areaSize.split(" ").splice(1, 1)[0];
 
   return (
@@ -37,16 +37,22 @@ const AuctionItem: FC<Props> = ({ auction }) => {
             </div>
           </div>
           <div className="flex flex-col gap-1 text-center">
-            <div className="text-3xl text-text-secondary-strong">{auction.price}</div>
-            <div className="flex gap-4 ">
-              <div className="text-xl">
-                <FontAwesomeIcon className="mr-1" icon={faChartArea} />
-                {auction.areaSize}
-              </div>
-              <div className="text-lg">
-                {~~(price / area)} {priceType}/{areaType}
-              </div>
-            </div>
+            { auction.priceType ? (
+              <div className="text-3xl text-text-secondary-strong">{auction.priceType}</div>
+            ) : (
+              <>
+                <div className="text-3xl text-text-secondary-strong">{auction.price}</div>
+                <div className="flex gap-4 ">
+                  <div className="text-xl">
+                    <FontAwesomeIcon className="mr-1" icon={faChartArea} />
+                    {auction.areaSize}
+                  </div>
+                  <div className="text-lg">
+                    {~~(price / area)} {priceType}/{areaType}
+                  </div>
+                </div>
+              </>
+            ) }
             <div className="flex gap-4">
               <div className="text-sm">
                 <FontAwesomeIcon className="mr-1" icon={faUser} />
