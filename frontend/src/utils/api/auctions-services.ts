@@ -15,12 +15,17 @@ export class AuctionsServices {
     return data;
   }
 
+  async getOneBySlug(slug: string): Promise<Iauction> {
+    const { data } = await axios.get(`${url}/slug/${slug}`);
+    return data;
+  }
+
   async getAll(): Promise<ImapAuction[]> {
     const { data } = await axios.get(url);
     return data;
   }
 
-  async getById(id: number): Promise<Iauction> {
+  async getOneById(id: number): Promise<Iauction> {
     const { data } = await axios.get(`${url}/${id}`);
     return data;
   }

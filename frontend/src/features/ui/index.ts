@@ -1,4 +1,6 @@
-import Header from "./header";
-import TailwindValues from "./tailwind-values";
+import Header from './header'
+import MainLayout from './main-layout'
+import TailwindValues from './tailwind-values'
 
-export { Header, TailwindValues };
+export { Header, MainLayout, TailwindValues }
+    

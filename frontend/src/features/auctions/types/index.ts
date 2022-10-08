@@ -6,6 +6,7 @@ export interface ImapAuction {
   slug: string;
   title: string;
   price: string;
+  priceType?: string;
   locationLat: number;
   locationLng: number;
   areaSize: string;

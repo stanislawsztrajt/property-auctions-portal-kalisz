@@ -18,6 +18,9 @@ module.exports = {
         'button-secondary': 'rgb(21 128 61)', // green 600
         'button-secondary-hover': 'rgb(22 163 74)', // green 700
         'border-primary-focus': 'rgb(37 99 235)', // blue-600
+      },
+      height: {
+        '1/12': '8.333333%'
       }
     }
   },

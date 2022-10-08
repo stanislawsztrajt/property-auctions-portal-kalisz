@@ -25,6 +25,9 @@ export class Auction {
   @Column({ type: 'varchar', length: 16 })
   public price: string;
 
+  @Column({ type: 'varchar', length: 16, nullable: true })
+  public priceType?: string;
+
   @Column({ type: 'varchar', length: 100 })
   public location: string;
 
