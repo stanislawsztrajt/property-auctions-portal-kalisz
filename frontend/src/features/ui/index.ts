@@ -1,6 +1,7 @@
+import HandleModal from './handle-modal'
 import Header from './header'
 import MainLayout from './main-layout'
 import TailwindValues from './tailwind-values'
 
-export { Header, MainLayout, TailwindValues }
+export { HandleModal, Header, MainLayout, TailwindValues }
     

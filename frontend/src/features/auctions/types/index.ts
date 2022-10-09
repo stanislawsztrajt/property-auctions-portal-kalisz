@@ -1,15 +1,25 @@
 import { IsavedAuction } from "@features/saved-auctions/types";
 import { Tcategory } from "utils/types";
 
+export type Tarea = {
+  unit: string,
+  size: number
+}
+
+export type Tlocation = {
+  name: string,
+  lat: number,
+  lng: number
+}
+
 export interface ImapAuction {
   id: number;
   slug: string;
   title: string;
-  price: string;
+  price: number;
   priceType?: string;
-  locationLat: number;
-  locationLng: number;
-  areaSize: string;
+  location: Tlocation;
+  area: Tarea;
   type: Tcategory;
   createdAt: Date;
   user: {
@@ -19,7 +29,6 @@ export interface ImapAuction {
 
 export interface Iauction extends ImapAuction {
   description: string;
-  location: string;
   phoneNumber: string;
   investment?: string;
   rooms?: number;
@@ -37,3 +46,4 @@ export interface IinRangeBody extends Iauction {
     by: "ASC" | "DESC";
   };
 }
+

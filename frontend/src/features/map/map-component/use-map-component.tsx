@@ -24,7 +24,7 @@ const useMapComponent = ({ auctions, defaultZoom, defaultCenter }: Props) => {
     },
     geometry: {
       type: "Point",
-      coordinates: [auction.locationLng, auction.locationLat],
+      coordinates: [auction.location.lng, auction.location.lat],
     },
   }));
 
@@ -46,8 +46,8 @@ const useMapComponent = ({ auctions, defaultZoom, defaultCenter }: Props) => {
   const getLatLng = (e: googleMapReact.ClickEventValue) => {
     console.log(e.lat, " : ", e.lng);
     return {
-      locationLat: e.lat,
-      locationLng: e.lng,
+      lat: e.lat,
+      lng: e.lng,
     };
   };
 

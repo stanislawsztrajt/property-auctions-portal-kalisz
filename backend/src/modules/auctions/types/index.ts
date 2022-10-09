@@ -8,3 +8,14 @@ export interface IinRangeBody extends Auction {
     by: string;
   };
 }
+
+export type Tarea = {
+  unit: string,
+  size: number
+}
+
+export type Tlocation = {
+  name: string,
+  lat: number,
+  lng: number
+}
