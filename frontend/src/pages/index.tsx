@@ -25,7 +25,7 @@ export default Home;
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const auctions: ImapAuction[] = await AuctionsServices.getAll();
-
+  console.log(auctions)
   return {
     props: {
       auctions,

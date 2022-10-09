@@ -9,7 +9,7 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
-import { Tcategory } from '../types';
+import { Tarea, Tcategory, Tlocation } from '../types';
 
 @Entity()
 export class Auction {
@@ -19,23 +19,17 @@ export class Auction {
   @Column({ type: 'varchar', length: 200, unique: true })
   public title: string;
 
-  @Column({ type: 'varchar', length: 6000, unique: true })
+  @Column({ type: 'varchar', length: 6000 })
   public description: string;
 
-  @Column({ type: 'varchar', length: 16 })
-  public price: string;
+  @Column({ type: 'int', nullable: true })
+  public price: number;
 
   @Column({ type: 'varchar', length: 16, nullable: true })
   public priceType?: string;
 
-  @Column({ type: 'varchar', length: 100 })
-  public location: string;
-
-  @Column({ type: 'float' })
-  public locationLat: number;
-
-  @Column({ type: 'float' })
-  public locationLng: number;
+  @Column({ type: 'json' })
+  public location: Tlocation;
 
   @Column({ type: 'varchar', length: 12 })
   public phoneNumber: string;
@@ -43,8 +37,8 @@ export class Auction {
   @Column({ type: 'varchar', length: 50 })
   public type: Tcategory;
 
-  @Column({ type: 'varchar', length: 20 })
-  public areaSize: string;
+  @Column({ type: 'json' })
+  public area: Tarea;
 
   @Column({ type: 'varchar', length: 300, unique: true })
   public slug: string;

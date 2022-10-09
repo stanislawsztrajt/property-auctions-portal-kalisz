@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
 import React, { FC } from "react";
+import { defaultCurrency } from "utils/constants";
 import { parseDateFns } from "utils/helpers";
 import { ImapAuction } from "../types";
 
@@ -11,11 +12,6 @@ interface Props {
 }
 
 const AuctionItem: FC<Props> = ({ auction }) => {
-  const price = +auction.price.split(" ").splice(0, 1)[0];
-  const priceType = auction.price.split(" ").splice(1, 1)[0];
-  const area = +auction.areaSize.split(" ").splice(0, 1)[0];
-  const areaType = auction.areaSize.split(" ").splice(1, 1)[0];
-
   return (
     <Link href={`/auctions/${auction.slug}`}>
       <div className="p-6 border-t cursor-pointer">
@@ -41,14 +37,14 @@ const AuctionItem: FC<Props> = ({ auction }) => {
               <div className="text-3xl text-text-secondary-strong">{auction.priceType}</div>
             ) : (
               <>
-                <div className="text-3xl text-text-secondary-strong">{auction.price}</div>
+                <div className="text-3xl text-text-secondary-strong">{auction.price} {defaultCurrency}</div>
                 <div className="flex gap-4 ">
                   <div className="text-xl">
                     <FontAwesomeIcon className="mr-1" icon={faChartArea} />
-                    {auction.areaSize}
+                    {auction.area.size} {auction.area.unit}
                   </div>
                   <div className="text-lg">
-                    {~~(price / area)} {priceType}/{areaType}
+                    {~~(auction.price / auction.area.size)} {defaultCurrency}/{auction.area.unit}
                   </div>
                 </div>
               </>

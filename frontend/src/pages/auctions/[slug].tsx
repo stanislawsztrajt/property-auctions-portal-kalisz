@@ -35,14 +35,14 @@ const AuctionPage: NextPage<Props> = ({ auction }: Props) => {
           {auction.title}
         </div>
         <div>
-          {auction.location}
+          {auction.location.name}
         </div>
         <div>
           {auction.price}
-          {auction.priceType}
+          {auction.priceType ?? auction.price}
         </div>
         <div>
-          {auction.areaSize}
+          {auction.area.size} {auction.area.unit}
         </div>
         <div>
           {auction.user.username}
@@ -72,7 +72,7 @@ const AuctionPage: NextPage<Props> = ({ auction }: Props) => {
           {auction?.rooms}
         </div>
       </div>
-      <MapComponent auctions={auctions} defaultZoom={auctionZoom} defaultCenter={{ lng: auction.locationLng, lat: auction.locationLat }} />
+      <MapComponent auctions={auctions} defaultZoom={auctionZoom} defaultCenter={{ lng: auction.location.lng, lat: auction.location.lat }} />
     </MainLayout>
   )
 }
