@@ -15,7 +15,7 @@ export class AuctionsService {
 
   findInRange(startRange: number, range: number, body: any) {
     let query = `
-      SELECT auction.id, auction.slug, auction.title, auction.price, auction.type, auction."areaSize", auction."locationLat", auction."locationLng",
+      SELECT auction.id, auction.slug, auction.title, auction.price, auction.type, auction."priceType", auction."createdAt", auction.area, auction.location,
       json_build_object('username', public.user.username) as user
       FROM auction
       LEFT JOIN public.user
@@ -70,6 +70,13 @@ export class AuctionsService {
     });
   }
 
+  findBySlug(slug: string) {
+    return this.auctionRepository.find({
+      where: { slug },
+      relations: { user: true },
+    });
+  }
+
   async create(createAuctionDto: CreateAuctionDto) {
     try {
       const newAuction = this.auctionRepository.create(createAuctionDto);
@@ -84,12 +91,12 @@ export class AuctionsService {
 
   async findAll() {
     const query = `
-      SELECT auction.id, auction.slug, auction.title, auction.price, auction.type, auction."areaSize", auction."locationLat", auction."locationLng", json_build_object('username', public.user.username) as user
+      SELECT auction.id, auction.slug, auction.title, auction.price, auction.type, auction."priceType", auction."createdAt", auction.area, auction.location, 
+      json_build_object('username', public.user.username) as user
       FROM auction
       LEFT JOIN public.user
       ON auction."userId" = public.user.id
-      GROUP BY auction.id, auction.slug, auction.title, auction.price, auction."locationLat",  auction."locationLng", public.user.username
-      ORDER BY auction.id
+      ORDER BY auction.id DESC
     `;
     return await this.auctionRepository.query(query);
   }

@@ -6,5 +6,12 @@
 
 body {
   font-family: poppins, sans-serif, monospace;
-  color: white;
+}
+
+.button-primary {
+  @apply py-2 text-lg duration-100 text-white rounded-full px-7 bg-blue-600 hover:bg-blue-700
+}
+
+.button-secondary {
+  @apply py-2 text-lg duration-100 border rounded-full px-7 hover:border-blue-600
 }

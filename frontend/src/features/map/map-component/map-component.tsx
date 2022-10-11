@@ -3,23 +3,28 @@ import GoogleMapReact from "google-map-react";
 
 import useMapComponent from "./use-map-component";
 
-import { defaultMapProps } from "utils/constants/map";
 import { ImapAuction } from "@features/auctions/types";
+import { defaultMapProps } from "utils/constants/map";
 
-interface Props {
+export interface Props {
   auctions: ImapAuction[];
+  defaultZoom?: number;
+  defaultCenter?: { lng: number, lat: number };
 }
 
-const MapComponent: FC<Props> = ({ auctions = [] }) => {
+const MapComponent: FC<Props> = (props) => {
   const { getLatLng, mapRef, handleZoomChange, clustersList, zoom, center } =
-    useMapComponent(auctions);
+    useMapComponent(props);
 
   return (
-    <div style={{ height: "100vh", width: "95vw" }}>
+    <div className="w-1/2 h-full text-white">
       <GoogleMapReact
         bootstrapURLKeys={{ key: "" }}
-        defaultCenter={defaultMapProps.center}
-        defaultZoom={defaultMapProps.zoom}
+        options={{
+          minZoom: defaultMapProps.minZoom
+        }}
+        defaultCenter={props.defaultCenter ?? defaultMapProps.center}
+        defaultZoom={props.defaultZoom ?? defaultMapProps.zoom}
         zoom={zoom}
         center={center}
         onClick={getLatLng}

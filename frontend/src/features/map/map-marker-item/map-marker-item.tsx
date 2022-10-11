@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useMapMarkerItem from "./use-map-marker-item";
 import Image from "next/image";
 import Link from "next/link";
+import { defaultCurrency } from "utils/constants";
 
 interface Props {
   $hover: boolean;
@@ -30,12 +31,11 @@ const MapMarkerItem: FC<Props> = ({ $hover, auction }) => {
           </div>
           <div className="flex flex-col justify-center w-4/6 ml-2 text-sm">
             <h3 className="font-medium">
-              {/* {auction.title.substring(0,23)}
-              {auction.title.length >= 23 ? '...' : null} */}
+              {auction.title.substring(0,23)}
+              {auction.title.length >= 23 ? '...' : null}
             </h3>
             <div className="font-medium text-green-600">
-              <span className="text-lg">{auction.price}</span>
-              <span className="ml-1 text-black">/{auction.areaSize}</span>
+              <span className="text-lg">{auction.price} {defaultCurrency}</span>
             </div>
             <div className="text-base">{auction.user?.username}</div>
           </div>
