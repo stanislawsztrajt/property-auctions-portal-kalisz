@@ -13,7 +13,7 @@ import { OwnerGuard } from 'modules/auth/guards/owner.guard';
 import { AuctionsService } from './auctions.service';
 import { CreateAuctionDto } from './dto/create-auction.dto';
 import { UpdateAuctionDto } from './dto/update-auction.dto';
-import { IinRangeBody } from './types';
+
 
 @Controller('auctions')
 export class AuctionsController {
@@ -23,7 +23,7 @@ export class AuctionsController {
   findInRange(
     @Param('startRange') startRange: number,
     @Param('range') range: number,
-    @Body() body: IinRangeBody
+    @Body() body: any
   ) {
     return this.auctionsService.findInRange(startRange, range, body);
   }
