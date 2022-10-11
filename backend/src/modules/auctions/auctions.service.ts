@@ -70,10 +70,6 @@ export class AuctionsService {
     });
   }
 
-  findBySlug(slug: string) {
-    return this.auctionRepository.find({ where: { slug }, relations: { user: true } });
-  }
-
   async create(createAuctionDto: CreateAuctionDto) {
     try {
       const newAuction = this.auctionRepository.create(createAuctionDto);

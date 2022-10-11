@@ -4,4 +4,7 @@ export const defaultMapProps = {
     lng: 18.083333,
   },
   zoom: 13,
+  minZoom: 13
 };
+
+export const auctionZoom = 18

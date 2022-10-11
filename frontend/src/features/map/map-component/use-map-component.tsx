@@ -1,4 +1,3 @@
-import { ImapAuction } from "@features/auctions/types";
 import googleMapReact from "google-map-react";
 import { useRef, useState } from "react";
 import useSupercluster from "use-supercluster";
@@ -9,24 +8,23 @@ import React from "react";
 import { BBox } from "geojson";
 import { AnyProps, PointFeature } from "supercluster";
 import { Ilocation } from "../types";
+import { Props } from "./map-component";
 
-const useMapComponent = (auctions: ImapAuction[]) => {
+const useMapComponent = ({ auctions, defaultZoom, defaultCenter }: Props) => {
   const mapRef = useRef<{ map: unknown; maps: unknown; ref: Element | null }>();
-  const [zoom, setZoom] = useState<number>(defaultMapProps.zoom);
-  const [center, setCenter] = useState<Ilocation>(defaultMapProps.center);
+  const [zoom, setZoom] = useState<number>(defaultZoom ?? defaultMapProps.zoom);
+  const [center, setCenter] = useState<Ilocation>(defaultCenter ?? defaultMapProps.center);
   const [bounds, setBounds] = useState<BBox | undefined>(undefined);
 
   const points: PointFeature<AnyProps>[] = auctions.map((auction) => ({
     type: "Feature",
     properties: {
       cluster: false,
-      auction: {
-        ...auction,
-      },
+      auction,
     },
     geometry: {
       type: "Point",
-      coordinates: [auction.locationLng, auction.locationLat],
+      coordinates: [auction.location.lng, auction.location.lat],
     },
   }));
 
@@ -48,8 +46,8 @@ const useMapComponent = (auctions: ImapAuction[]) => {
   const getLatLng = (e: googleMapReact.ClickEventValue) => {
     console.log(e.lat, " : ", e.lng);
     return {
-      locationLat: e.lat,
-      locationLng: e.lng,
+      lat: e.lat,
+      lng: e.lng,
     };
   };
 

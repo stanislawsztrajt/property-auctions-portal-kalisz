@@ -12,6 +12,32 @@ import { User } from 'modules/users/entities/user.entity';
 import { maxLat, maxLng, minLat, minLng } from 'utils/constants';
 import { Tcategory } from '../types';
 
+export class LocationDto {
+  @IsString()
+  @MaxLength(100)
+  public name: string
+
+  @IsNumber()
+  @Min(minLat)
+  @Max(maxLat)
+  public lat: number;
+
+  @IsNumber()
+  @Min(minLng)
+  @Max(maxLng)
+  public lng: number;
+}
+
+export class AreaDto {
+  @IsNumber()
+  @Max(2147483647)
+  public size: number;
+
+  @IsString()
+  @MaxLength(5)
+  public unit: string;
+}
+
 export class CreateAuctionDto {
   @IsString()
   @MaxLength(200)
@@ -23,24 +49,18 @@ export class CreateAuctionDto {
   @MinLength(8)
   public description: string;
 
+  @IsNumber()
+  @Max(2147483647)
+  public price: number;
+
+  @IsOptional()
   @IsString()
   @MaxLength(16)
-  public price: string;
+  public priceType: string;
 
-  @IsString()
-  @MaxLength(100)
-  public location: string;
+  public location: LocationDto;
 
-  @IsNumber()
-  @Min(minLat)
-  @Max(maxLat)
-  public locationLat: number;
-
-  @IsNumber()
-  @Min(minLng)
-  @Max(maxLng)
-  public locationLng: number;
-
+  @IsOptional()
   @IsString()
   @MaxLength(12)
   public phoneNumber: string;
@@ -49,9 +69,7 @@ export class CreateAuctionDto {
   @MaxLength(50)
   public type: Tcategory;
 
-  @IsString()
-  @MaxLength(20)
-  public areaSize: string;
+  public area: AreaDto;
 
   @IsOptional()
   @IsString()
