@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { CreateAuctionDto } from './dto/create-auction.dto';
 import { UpdateAuctionDto } from './dto/update-auction.dto';
 import { Auction } from './entities/auction.entity';
-import { IinRangeBody } from './types';
+
 
 @Injectable()
 export class AuctionsService {
@@ -13,7 +13,7 @@ export class AuctionsService {
     private readonly auctionRepository: Repository<Auction>
   ) {}
 
-  findInRange(startRange: number, range: number, body: IinRangeBody) {
+  findInRange(startRange: number, range: number, body: any) {
     let query = `
       SELECT auction.id, auction.slug, auction.title, auction.price, auction.type, auction."areaSize", auction."locationLat", auction."locationLng",
       json_build_object('username', public.user.username) as user
@@ -22,18 +22,44 @@ export class AuctionsService {
       ON auction."userId" = public.user.id
       `;
 
-    Object.entries(body).forEach(([key, value], index) => {
-      if (key === 'sort') return
+    const entries = Object.entries(body).filter(([key]) => key !== 'sort');
+    entries.forEach(([key, value]: [any, any], index) => {
+      // about cases https://www.figma.com/file/23sdQ1dBe2UEbyaC9w2ZoC/Untitled?node-id=0%3A1
 
-      query +=
-        `${index === 0 ? ' WHERE' : ' AND'}
-        auction."${key}" LIKE '%${value}%' `
+      // case 3
+      if (value.unit && value.since && value.to) {
+        return query +=
+          `${index === 0 ? ' WHERE' : ' AND '}
+          (${key} ->> 'size')::float > ${value.since}
+          AND (${key} ->> 'size')::float < ${value.to}
+          AND (${key} ->> 'unit')::text = '${value.unit}'
+        `;
+      }
+
+      // case 2
+      if (value.since && value.to) {
+        return query +=
+          `${index === 0 ? ' WHERE ' : ' AND '}
+          auction."${key}" > ${value.since}
+          AND auction."${key}" < ${value.to}
+        `;
+      }
+
+      // case 1
+      query += `
+        ${index === 0 ? ' WHERE' : ' AND'}
+        auction."${key}" iLIKE '%${value}%'
+      `;
     });
 
+    // adding sorting by DESC | ASC and LIMIT
     query +=
-    `${body.sort ? `ORDER BY auction."${body.sort.name}" ${body.sort.by}` : ''}
-    LIMIT ${range} OFFSET ${startRange}`;
-
+    `${body?.sort
+        ? `ORDER BY auction."${body.sort.name}" ${body.sort.by}`
+        : 'ORDER BY auction.id DESC'
+      }
+      LIMIT ${range} OFFSET ${startRange}
+    `;
     return this.auctionRepository.query(query);
   }
 
