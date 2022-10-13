@@ -46,19 +46,19 @@ export class Auction {
   @Column({ type: 'varchar', length: 100, nullable: true })
   public investment?: string;
 
-  @Column({ type: 'varchar', length: 12, nullable: true })
+  @Column({ type: 'smallint', nullable: true })
   public rooms?: number;
 
   @Column({ type: 'smallint', nullable: true })
   public level?: number;
 
-  @Column({ type: 'varchar', length: 20, nullable: true })
-  public rent?: string;
+  @Column({ type: 'int', nullable: true })
+  public rent?: number;
 
   @Column({ type: 'varchar', length: 200, nullable: true })
   public additions?: string;
 
-  @Column({ type: 'boolean', nullable: true })
+  @Column({ type: 'boolean', default: false, nullable: true })
   public parkingSpace?: boolean;
 
   @CreateDateColumn({ type: 'timestamp', readonly: true })

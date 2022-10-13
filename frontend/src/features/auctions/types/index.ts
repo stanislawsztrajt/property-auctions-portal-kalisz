@@ -2,15 +2,15 @@ import { IsavedAuction } from "@features/saved-auctions/types";
 import { Tcategory } from "utils/types";
 
 export type Tarea = {
-  unit: string,
-  size: number
-}
+  unit: string;
+  size: number;
+};
 
 export type Tlocation = {
-  name: string,
-  lat: number,
-  lng: number
-}
+  name: string;
+  lat: number;
+  lng: number;
+};
 
 export interface ImapAuction {
   id: number;
@@ -46,4 +46,3 @@ export interface IinRangeBody extends Iauction {
     by: "ASC" | "DESC";
   };
 }
-

@@ -1,6 +1,5 @@
 const useHandleModal = () => {
-  return {}
-}
+  return {};
+};
 
-export default useHandleModal
-  
+export default useHandleModal;

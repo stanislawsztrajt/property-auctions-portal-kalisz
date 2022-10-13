@@ -8,8 +8,8 @@ const useMapSearchSort = () => {
 
   useEffect(() => {
     if (isFirstTime) {
-      const { slug, ...query} = router.query;
-      router.push({ pathname: '/', query: { ...query, sort: selectedOption } });
+      const { slug, ...query } = router.query;
+      router.push({ pathname: "/", query: { ...query, sort: selectedOption } });
     } else setIsFirstTime(true);
   }, [selectedOption]);
 

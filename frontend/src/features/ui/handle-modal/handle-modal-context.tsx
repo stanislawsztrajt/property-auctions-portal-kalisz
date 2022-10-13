@@ -1,29 +1,28 @@
-import React from 'react'
+import React from "react";
 import { Context, createContext, ReactNode, useContext, useState } from "react";
 import { FCC } from "utils/types";
 
 interface IhandleModalContext {
-  isModalShow?: boolean
-  setIsModalShow?: React.Dispatch<React.SetStateAction<boolean>>
+  isModalShow?: boolean;
+  setIsModalShow?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const HandleModalShow: Context<IhandleModalContext> = createContext({});
 
-export const useHandleModalShow: () => IhandleModalContext = () =>{
-  return useContext(HandleModalShow)
-}
+export const useHandleModalShow: () => IhandleModalContext = () => {
+  return useContext(HandleModalShow);
+};
 
 interface Props {
-  children: ReactNode
+  children: ReactNode;
 }
 
-export const HandleModalContext: FCC<Props> = ({ children }: Props) =>{
+export const HandleModalContext: FCC<Props> = ({ children }: Props) => {
   const [isModalShow, setIsModalShow] = useState<boolean>(false);
 
-
-  return(
+  return (
     <HandleModalShow.Provider value={{ isModalShow, setIsModalShow }}>
-      { children }
+      {children}
     </HandleModalShow.Provider>
-  )
-}
+  );
+};

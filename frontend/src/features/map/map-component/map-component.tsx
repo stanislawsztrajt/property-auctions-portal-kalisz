@@ -9,7 +9,7 @@ import { defaultMapProps } from "utils/constants/map";
 export interface Props {
   auctions: ImapAuction[];
   defaultZoom?: number;
-  defaultCenter?: { lng: number, lat: number };
+  defaultCenter?: { lng: number; lat: number };
 }
 
 const MapComponent: FC<Props> = (props) => {
@@ -21,7 +21,7 @@ const MapComponent: FC<Props> = (props) => {
       <GoogleMapReact
         bootstrapURLKeys={{ key: "" }}
         options={{
-          minZoom: defaultMapProps.minZoom
+          minZoom: defaultMapProps.minZoom,
         }}
         defaultCenter={props.defaultCenter ?? defaultMapProps.center}
         defaultZoom={props.defaultZoom ?? defaultMapProps.zoom}

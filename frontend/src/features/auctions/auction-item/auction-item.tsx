@@ -33,11 +33,13 @@ const AuctionItem: FC<Props> = ({ auction }) => {
             </div>
           </div>
           <div className="flex flex-col gap-1 text-center">
-            { auction.priceType ? (
+            {auction.priceType ? (
               <div className="text-3xl text-text-secondary-strong">{auction.priceType}</div>
             ) : (
               <>
-                <div className="text-3xl text-text-secondary-strong">{auction.price} {defaultCurrency}</div>
+                <div className="text-3xl text-text-secondary-strong">
+                  {auction.price} {defaultCurrency}
+                </div>
                 <div className="flex gap-4 ">
                   <div className="text-xl">
                     <FontAwesomeIcon className="mr-1" icon={faChartArea} />
@@ -48,7 +50,7 @@ const AuctionItem: FC<Props> = ({ auction }) => {
                   </div>
                 </div>
               </>
-            ) }
+            )}
             <div className="flex gap-4">
               <div className="text-sm">
                 <FontAwesomeIcon className="mr-1" icon={faUser} />

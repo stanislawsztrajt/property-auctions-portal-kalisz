@@ -9,8 +9,8 @@ const useMapSearchInput = () => {
   const [isFirstTime, setIsFirstTime] = useState(false);
 
   const handleInput = async (searchValue: string, routerQuery: ParsedUrlQuery) => {
-    const { slug, ...query} = routerQuery;
-    router.push({ pathname: '/', query: { ...query, title: searchValue } });
+    const { slug, ...query } = routerQuery;
+    router.push({ pathname: "/", query: { ...query, title: searchValue } });
   };
 
   const debouncedSearhValue = useCallback(debounce({ delay: 1000 }, handleInput), []);

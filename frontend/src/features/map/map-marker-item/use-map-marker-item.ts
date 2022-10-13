@@ -8,6 +8,7 @@ import {
   IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
 import { Iauction } from "@features/auctions/types";
+import { PropertyType } from "features/auctions/types/enums";
 
 interface Iicon {
   name: IconDefinition;
@@ -19,16 +20,16 @@ const useMapMarkerItem = (auction: Iauction) => {
 
   useEffect(() => {
     switch (auction.type) {
-      case "dom":
+      case PropertyType.HOME:
         setIcon({ name: faHouse, color: "blue-500" });
         break;
-      case "działka":
+      case PropertyType.ALLOTMENT:
         setIcon({ name: faTents, color: "green-500" });
         break;
-      case "pole":
+      case PropertyType.FIELD:
         setIcon({ name: faWheatAlt, color: "orange-900" });
         break;
-      case "mieszkanie":
+      case PropertyType.APARTMENT:
         setIcon({ name: faBuilding, color: "gray-700" });
         break;
     }
