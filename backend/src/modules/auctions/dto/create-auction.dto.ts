@@ -15,7 +15,7 @@ import { Tcategory } from '../types';
 export class LocationDto {
   @IsString()
   @MaxLength(100)
-  public name: string
+  public name: string;
 
   @IsNumber()
   @Min(minLat)
@@ -88,7 +88,7 @@ export class CreateAuctionDto {
   @IsOptional()
   @IsString()
   @MaxLength(20)
-  public rent: string;
+  public rent: number;
 
   @IsOptional()
   @IsString()

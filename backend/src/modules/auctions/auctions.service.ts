@@ -5,7 +5,6 @@ import { CreateAuctionDto } from './dto/create-auction.dto';
 import { UpdateAuctionDto } from './dto/update-auction.dto';
 import { Auction } from './entities/auction.entity';
 
-
 @Injectable()
 export class AuctionsService {
   constructor(
@@ -22,27 +21,32 @@ export class AuctionsService {
       ON auction."userId" = public.user.id
       `;
 
+    console.log(body);
     const entries = Object.entries(body).filter(([key]) => key !== 'sort');
     entries.forEach(([key, value]: [any, any], index) => {
       // about cases https://www.figma.com/file/23sdQ1dBe2UEbyaC9w2ZoC/Untitled?node-id=0%3A1
-
       // case 3
-      if (value.unit && value.since && value.to) {
-        return query +=
-          `${index === 0 ? ' WHERE' : ' AND '}
-          (${key} ->> 'size')::float > ${value.since}
-          AND (${key} ->> 'size')::float < ${value.to}
+      if (value.unit) {
+        return (query += `${index === 0 ? ' WHERE' : ' AND '}
+          (${key} ->> 'size')::float >= ${value.from}
+          AND (${key} ->> 'size')::float <= ${value.to}
           AND (${key} ->> 'unit')::text = '${value.unit}'
-        `;
+        `);
       }
 
       // case 2
-      if (value.since && value.to) {
-        return query +=
-          `${index === 0 ? ' WHERE ' : ' AND '}
-          auction."${key}" > ${value.since}
-          AND auction."${key}" < ${value.to}
-        `;
+      if (value.to) {
+        return (query += `${index === 0 ? ' WHERE ' : ' AND '}
+          auction."${key}" >= ${value.from}
+          AND auction."${key}" <= ${value.to}
+        `);
+      }
+
+      // case with false or true
+      if (typeof value === 'boolean') {
+        return (query += `${index === 0 ? ' WHERE ' : ' AND '}
+          auction."${key}" = ${value}
+        `);
       }
 
       // case 1
@@ -53,13 +57,14 @@ export class AuctionsService {
     });
 
     // adding sorting by DESC | ASC and LIMIT
-    query +=
-    `${body?.sort
+    query += `${
+      body?.sort
         ? `ORDER BY auction."${body.sort.name}" ${body.sort.by}`
         : 'ORDER BY auction.id DESC'
-      }
+    }
       LIMIT ${range} OFFSET ${startRange}
     `;
+    console.log(query);
     return this.auctionRepository.query(query);
   }
 

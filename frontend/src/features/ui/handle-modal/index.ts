@@ -1,1 +1,1 @@
-export { default } from "./handle-modal"
+export { default } from "./handle-modal";

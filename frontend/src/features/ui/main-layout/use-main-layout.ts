@@ -1,6 +1,5 @@
 const useMainLayout = () => {
-  return {}
-}
+  return {};
+};
 
-export default useMainLayout
-  
+export default useMainLayout;

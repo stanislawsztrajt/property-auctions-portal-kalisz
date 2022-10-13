@@ -17,7 +17,6 @@ const MapSearchOptions: FC<Props> = ({ setAuctions }) => {
       <HandleModalContext>
         <MapSearchFilters />
       </HandleModalContext>
-
     </div>
   );
 };

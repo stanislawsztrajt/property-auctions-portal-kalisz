@@ -1,5 +1,4 @@
-export type Tcategory = "dom" | "mieszkanie" | "działka" | "inne";
-
+export type Tcategory = "dom" | "mieszkanie" | "działka" | "pole" | "inne";
 
 // FC type with children
 import { FC, PropsWithChildren } from "react";

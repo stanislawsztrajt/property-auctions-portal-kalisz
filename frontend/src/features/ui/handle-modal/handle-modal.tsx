@@ -1,6 +1,6 @@
-import React, { ReactNode } from 'react'
-import { FCC } from 'utils/types';
-import { useHandleModalShow } from './handle-modal-context';
+import React, { ReactNode } from "react";
+import { FCC } from "utils/types";
+import { useHandleModalShow } from "./handle-modal-context";
 
 interface Props {
   Modal: ReactNode;
@@ -8,19 +8,16 @@ interface Props {
 }
 
 const HandleModal: FCC<Props> = ({ Modal, Button }: Props) => {
-  const { isModalShow } = useHandleModalShow()
+  const { isModalShow } = useHandleModalShow();
 
-  return(
+  return (
     <>
-      {
-        isModalShow ? (
-          <>{ Modal }</>
-        ) : (
-          <>{ Button }</>
-        )
-      }
+      {isModalShow && (
+        <div className="fixed top-0 left-0 z-10 w-screen h-screen bg-black opacity-50"></div>
+      )}
+      {isModalShow ? <>{Modal}</> : <>{Button}</>}
     </>
-  )
-}
+  );
+};
 
-export default HandleModal
+export default HandleModal;

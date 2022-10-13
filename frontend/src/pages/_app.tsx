@@ -5,7 +5,7 @@ import { Header } from "@features/ui";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <div className='h-screen'>
+    <div className="h-screen">
       <Header />
       <Component {...pageProps} />
     </div>
