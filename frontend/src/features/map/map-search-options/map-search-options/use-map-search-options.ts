@@ -14,8 +14,12 @@ const useMapSearchOptions = ({ setAuctions }: Props) => {
         sort = JSON.parse(String(router.query.sort));
       }
 
-      const body = { ...router.query, sort } as object as IinRangeBody;
+      let filterValues;
+      if (router.query.filterValues) {
+        filterValues = JSON.parse(String(router.query.filterValues));
+      }
 
+      const body: IinRangeBody =  { title: router.query.title, sort, ...filterValues };
       const auctions: ImapAuction[] = await AuctionsServices.getInRangeWithFilterAndSort(
         0,
         20,

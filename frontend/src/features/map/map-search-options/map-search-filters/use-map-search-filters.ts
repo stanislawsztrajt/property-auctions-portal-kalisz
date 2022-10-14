@@ -1,9 +1,36 @@
-import { IinRangeBody } from "@features/auctions/types";
-import { AreaUnit, PriceType, PropertyType } from "features/auctions/types/enums";
-import { AuctionsServices } from "utils/api";
+import { AreaUnit } from "features/auctions/types/enums";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import * as Yup from "yup";
 
-const initialValues = {
+interface IfilterValues {
+  price?: {
+    from: string | number;
+    to: string | number;
+  };
+  priceType?: string | number;
+  area?: {
+    from: string | number;
+    to: string | number;
+    unit: AreaUnit;
+  };
+  type?: string | number;
+  rooms?: {
+    from: string | number;
+    to: string | number;
+  };
+  level?: {
+    from: string | number;
+    to: string | number;
+  };
+  rent?: {
+    from: string | number;
+    to: string | number;
+  };
+  parkingSpace?: boolean;
+}
+
+let initialValues = {
   price: {
     from: "",
     to: "",
@@ -28,29 +55,33 @@ const initialValues = {
     to: "",
   },
   parkingSpace: false,
-} as const;
+};
 
 const validationSchema = {};
 
 const useMapSearchFilters = () => {
-  const filterAuctions = async (values: any) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router.query.filterValues) {
+      const prev = JSON.parse(String(router.query.filterValues))
+      initialValues = { ...initialValues, ...prev}
+    }
+  }, [router.query])
+
+  const filterAuctions = async (values: IfilterValues) => {
     const valuesEntries: [string, string | boolean | any][] = Object.entries(values);
-    const filteredValuesEntries = valuesEntries.filter(([key, value]) => {
-      if (value === "" || value === false || (value.from === "" && value.to === "")) {
+    const filteredValuesEntries = valuesEntries.filter((entry) => {
+      if (entry[1] === "" || entry[1] === false || (entry[1].from === "" && entry[1].to === "")) {
         return false;
       }
       return true;
     });
 
-    const newValues = Object.fromEntries(filteredValuesEntries);
+    const filterValues: IfilterValues = Object.fromEntries(filteredValuesEntries);
+    const { slug, ...previousQuery } = router.query;
 
-    console.log(newValues);
-    const res = await AuctionsServices.getInRangeWithFilterAndSort(
-      0,
-      10,
-      newValues as IinRangeBody
-    );
-    console.log(res);
+    router.push({ pathname: "/", query: { ...previousQuery, filterValues: JSON.stringify(filterValues) } });
   };
 
   return { initialValues, validationSchema, filterAuctions };
