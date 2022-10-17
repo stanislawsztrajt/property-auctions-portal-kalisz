@@ -3,12 +3,11 @@ import { HandleModal } from "@features/ui";
 import { useHandleModalShow } from "@features/ui/handle-modal/handle-modal-context";
 import { Formik, Form, Field } from "formik";
 import useMapSearchFilters from "./use-map-search-filters";
+import { AreaUnitArray } from "@features/auctions/types/enums";
 
 const MapSearchFilters: FC = () => {
   const { setIsModalShow } = useHandleModalShow();
   const { initialValues, validationSchema, filterAuctions } = useMapSearchFilters();
-
-  if (!setIsModalShow) return <>Error modal show context</>;
 
   return (
     <HandleModal
@@ -24,6 +23,16 @@ const MapSearchFilters: FC = () => {
               <div>
                 <Field type="number" placeholder="area from" name="area.from" />
                 <Field type="number" placeholder="area to" name="area.to" />
+                <Field as='select' name='area.unit'>
+                    <option value=''></option>
+                  {
+                    AreaUnitArray.map(unit => {
+                      return (
+                        <option key={unit} value={unit}>{unit}</option>
+                      )
+                    })
+                  }
+                </Field>
                 area unit
                 {/* <Field type='text' placeholder='from' name='area.unit' /> */}
               </div>
@@ -44,11 +53,10 @@ const MapSearchFilters: FC = () => {
                 <Field type="number" placeholder="area to" name="rent.to" />
               </div>
 
-              <button type="submit">Submit</button>
-              <button onClick={() => setIsModalShow(false)} className="button-secondary">
+              <button type="button" onClick={() => setIsModalShow(false)} className="button-secondary">
                 Anuluj
               </button>
-              <button onClick={() => setIsModalShow(false)} className="button-primary">
+              <button type="submit" className="button-primary">
                 Zapisz filtry
               </button>
             </Form>
