@@ -10,6 +10,8 @@ export enum AreaUnit {
   M2 = "m2",
 }
 
+export const AreaUnitArray = Object.entries(AreaUnit).map((unit) => unit[1])
+
 export enum PropertyType {
   HOME = "dom",
   APARTMENT = "mieszkanie",

@@ -1,3 +1,4 @@
+import { useHandleModalShow } from "@features/ui/handle-modal/handle-modal-context";
 import { AreaUnit } from "features/auctions/types/enums";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -61,6 +62,8 @@ const validationSchema = {};
 
 const useMapSearchFilters = () => {
   const router = useRouter();
+  const { setIsModalShow } = useHandleModalShow();
+
 
   useEffect(() => {
     if (router.query.filterValues) {
@@ -82,6 +85,8 @@ const useMapSearchFilters = () => {
     const { slug, ...previousQuery } = router.query;
 
     router.push({ pathname: "/", query: { ...previousQuery, filterValues: JSON.stringify(filterValues) } });
+    
+    setIsModalShow(false);
   };
 
   return { initialValues, validationSchema, filterAuctions };
