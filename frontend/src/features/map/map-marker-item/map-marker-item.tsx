@@ -30,10 +30,7 @@ const MapMarkerItem: FC<Props> = ({ $hover, auction }) => {
             />
           </div>
           <div className="flex flex-col justify-center w-4/6 ml-2 text-sm">
-            <h3 className="font-medium">
-              {auction.title.substring(0, 23)}
-              {auction.title.length >= 23 ? "..." : null}
-            </h3>
+            <h3 className="font-medium">{auction.title.substring(0, 40)}</h3>
             <div className="font-medium text-green-600">
               <span className="text-lg">
                 {auction.price} {defaultCurrency}

@@ -19,3 +19,9 @@ export type Tlocation = {
   lat: number;
   lng: number;
 };
+
+export enum PriceType {
+  EXCHANGE = 'wymiana',
+  PAYMENT = 'zapłata',
+  RENTAL = 'wynajem',
+}

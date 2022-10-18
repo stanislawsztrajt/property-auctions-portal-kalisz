@@ -1,5 +1,6 @@
 import { IsavedAuction } from "@features/saved-auctions/types";
 import { Tcategory } from "utils/types";
+import { PriceType } from "./enums";
 
 export type Tarea = {
   unit: string;
@@ -17,7 +18,7 @@ export interface ImapAuction {
   slug: string;
   title: string;
   price: number;
-  priceType?: string;
+  priceType: PriceType;
   location: Tlocation;
   area: Tarea;
   type: Tcategory;
