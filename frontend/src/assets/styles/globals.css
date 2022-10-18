@@ -1,0 +1,37 @@
+@import url("https://use.typekit.net/slh7fgx.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: poppins, sans-serif, monospace;
+}
+
+.button-primary {
+  @apply py-2 text-lg duration-100 text-white rounded-full px-7 bg-blue-600 hover:bg-blue-700
+}
+
+.button-secondary {
+  @apply py-2 text-lg duration-100 border rounded-full px-7 hover:border-blue-600
+}
+
+.from-to-input {
+  @apply w-32 border-b-2 focus:border-blue-600 outline-none px-1
+}
+
+.select-primary {
+  @apply block
+  px-2
+  py-1.5
+  text-base
+  font-normal
+  text-gray-700
+  bg-white bg-clip-padding bg-no-repeat
+  border-2 border-solid border-gray-300
+  rounded
+  transition
+  ease-in-out
+  m-0
+  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+}
