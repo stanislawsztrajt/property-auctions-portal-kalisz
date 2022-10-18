@@ -5,6 +5,10 @@ import { CreateAuctionDto } from './dto/create-auction.dto';
 import { UpdateAuctionDto } from './dto/update-auction.dto';
 import { Auction } from './entities/auction.entity';
 
+const isQueryHasCondition = (query: string) => {
+  return query.includes('WHERE') ? ' AND ' : ' WHERE ';
+};
+
 @Injectable()
 export class AuctionsService {
   constructor(
@@ -21,39 +25,74 @@ export class AuctionsService {
       ON auction."userId" = public.user.id
       `;
 
-    console.log(body);
     const entries = Object.entries(body).filter(([key]) => key !== 'sort');
-    entries.forEach(([key, value]: [any, any], index) => {
-      // about cases https://www.figma.com/file/23sdQ1dBe2UEbyaC9w2ZoC/Untitled?node-id=0%3A1
-      // case 3
-      if (value.unit) {
-        return (query += `${index === 0 ? ' WHERE' : ' AND '}
-          (${key} ->> 'size')::float >= ${value.from}
-          AND (${key} ->> 'size')::float <= ${value.to}
-          AND (${key} ->> 'unit')::text = '${value.unit}'
-        `);
-      }
+    entries.forEach(([key, value]: [any, any]) => {
+      // case 2, 3
+      if (typeof value === 'object') {
+        Object.entries(value).forEach((entry) => {
+          // is value is empty
+          if (entry[1] === '') return;
 
-      // case 2
-      if (value.to) {
-        return (query += `${index === 0 ? ' WHERE ' : ' AND '}
-          auction."${key}" >= ${value.from}
-          AND auction."${key}" <= ${value.to}
-        `);
+          switch (entry[0]) {
+            case 'from': {
+              if (key === 'area') {
+                return (query += `
+                  ${isQueryHasCondition(query)}
+                  (${key} ->> 'size')::float >= ${value.from}
+                `);
+              }
+              query += `
+                ${isQueryHasCondition(query)}
+                auction."${key}" >= ${value.from}
+              `;
+              break;
+            }
+            case 'to': {
+              if (key === 'area') {
+                return (query += `
+                  ${isQueryHasCondition(query)}
+                  (${key} ->> 'size')::float <= ${value.to}
+                `);
+              }
+              query += `
+                ${isQueryHasCondition(query)}
+                auction."${key}" <= ${value.to}
+              `;
+
+              break;
+            }
+            case 'unit': {
+              query += `
+                ${isQueryHasCondition(query)}
+                (${key} ->> 'unit')::text = '${value.unit}'
+              `;
+
+              break;
+            }
+            default: {
+              throw new HttpException(
+                'Object key is wrong',
+                HttpStatus.BAD_REQUEST
+              );
+            }
+          }
+        });
       }
 
       // case with false or true
-      if (typeof value === 'boolean') {
-        return (query += `${index === 0 ? ' WHERE ' : ' AND '}
+      else if (typeof value === 'boolean') {
+        return (query += `${isQueryHasCondition(query)}
           auction."${key}" = ${value}
         `);
       }
 
       // case 1
-      query += `
-        ${index === 0 ? ' WHERE' : ' AND'}
-        auction."${key}" iLIKE '%${value}%'
-      `;
+      else {
+        query += `
+          ${isQueryHasCondition(query)}
+          auction."${key}" iLIKE '%${value}%'
+        `;
+      }
     });
 
     // adding sorting by DESC | ASC and LIMIT
@@ -64,6 +103,7 @@ export class AuctionsService {
     }
       LIMIT ${range} OFFSET ${startRange}
     `;
+
     console.log(query);
     return this.auctionRepository.query(query);
   }

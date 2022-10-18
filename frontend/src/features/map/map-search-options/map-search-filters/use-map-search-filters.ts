@@ -13,7 +13,7 @@ interface IfilterValues {
   area?: {
     from: string | number;
     to: string | number;
-    unit: AreaUnit;
+    unit: AreaUnit | string;
   };
   type?: string | number;
   rooms?: {
@@ -40,7 +40,7 @@ let initialValues = {
   area: {
     from: "",
     to: "",
-    unit: AreaUnit.M2,
+    unit: "",
   },
   type: "",
   rooms: {
@@ -64,18 +64,21 @@ const useMapSearchFilters = () => {
   const router = useRouter();
   const { setIsModalShow } = useHandleModalShow();
 
-
   useEffect(() => {
     if (router.query.filterValues) {
-      const prev = JSON.parse(String(router.query.filterValues))
-      initialValues = { ...initialValues, ...prev}
+      const prev = JSON.parse(String(router.query.filterValues));
+      initialValues = { ...initialValues, ...prev };
     }
-  }, [router.query])
+  }, [router.query]);
 
   const filterAuctions = async (values: IfilterValues) => {
     const valuesEntries: [string, string | boolean | any][] = Object.entries(values);
     const filteredValuesEntries = valuesEntries.filter((entry) => {
-      if (entry[1] === "" || entry[1] === false || (entry[1].from === "" && entry[1].to === "")) {
+      if (
+        entry[1] === "" ||
+        entry[1] === false ||
+        (entry[1].from === "" && entry[1].to === "" && (entry[1].unit === "" || !entry[1].unit))
+      ) {
         return false;
       }
       return true;
@@ -83,9 +86,12 @@ const useMapSearchFilters = () => {
 
     const filterValues: IfilterValues = Object.fromEntries(filteredValuesEntries);
     const { slug, ...previousQuery } = router.query;
+    console.log(filterValues);
+    router.push({
+      pathname: "/",
+      query: { ...previousQuery, filterValues: JSON.stringify(filterValues) },
+    });
 
-    router.push({ pathname: "/", query: { ...previousQuery, filterValues: JSON.stringify(filterValues) } });
-    
     setIsModalShow(false);
   };
 

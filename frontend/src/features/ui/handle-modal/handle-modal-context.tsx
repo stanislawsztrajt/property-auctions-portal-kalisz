@@ -4,12 +4,14 @@ import { FCC } from "utils/types";
 
 interface IhandleModalContext {
   isModalShow: boolean;
-  setIsModalShow: (isModalShow: boolean) => void
+  setIsModalShow: (isModalShow: boolean) => void;
 }
 
 const HandleModalShow = createContext<IhandleModalContext>({
   isModalShow: false,
-  setIsModalShow: (isModalShow: boolean) => { console.log(isModalShow) }
+  setIsModalShow: (isModalShow: boolean) => {
+    console.log(isModalShow);
+  },
 });
 
 export const useHandleModalShow: () => IhandleModalContext = () => {
@@ -24,8 +26,8 @@ export const HandleModalContext: FCC<Props> = ({ children }: Props) => {
   const [isModalShow, setIsModal] = useState<boolean>(false);
 
   const setIsModalShow = (isModalShow: boolean) => {
-    setIsModal(isModalShow)
-  }
+    setIsModal(isModalShow);
+  };
 
   return (
     <HandleModalShow.Provider value={{ isModalShow, setIsModalShow }}>

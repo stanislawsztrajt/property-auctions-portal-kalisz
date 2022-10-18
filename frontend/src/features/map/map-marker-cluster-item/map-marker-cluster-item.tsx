@@ -19,7 +19,7 @@ const MapMarkerClusterItem: FC<Props> = (props) => {
   return (
     <div
       onClick={zoomToCluster}
-      className={`flex items-center justify-center font-medium text-lg bg-red-500 rounded-full h-12 w-12`}
+      className={`flex items-center justify-center font-medium text-lg bg-red-600 rounded-full h-12 w-12`}
     >
       {props.pointCount}
     </div>

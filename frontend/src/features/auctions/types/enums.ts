@@ -5,17 +5,19 @@ export enum PriceType {
 }
 
 export enum AreaUnit {
-  A = "a",
-  HA = "ha",
   M2 = "m2",
+  A = "a",
+  HA = "Ha",
 }
 
-export const AreaUnitArray = Object.entries(AreaUnit).map((unit) => unit[1])
+export const AreaUnitArray = Object.entries(AreaUnit).map((unit) => unit[1]);
 
 export enum PropertyType {
-  HOME = "dom",
   APARTMENT = "mieszkanie",
+  HOME = "dom",
   ALLOTMENT = "działka",
   FIELD = "pole",
   OTHER = "inne",
 }
+
+export const PropertyTypeArray = Object.entries(PropertyType).map((unit) => unit[1]);
