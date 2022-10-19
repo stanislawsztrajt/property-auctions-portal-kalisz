@@ -12,10 +12,11 @@ const HandleModal: FCC<Props> = ({ Modal, Button }: Props) => {
 
   return (
     <>
+      {Button}
       {isModalShow && (
         <div className="fixed top-0 left-0 z-10 w-screen h-screen bg-black opacity-50"></div>
       )}
-      {isModalShow ? <>{Modal}</> : <>{Button}</>}
+      {isModalShow ? <>{Modal}</> : null}
     </>
   );
 };
