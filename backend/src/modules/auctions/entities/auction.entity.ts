@@ -9,7 +9,7 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
-import { PriceType, Tarea, Tcategory, Tlocation } from '../types';
+import { Tarea, Tcategory, Tlocation } from '../types';
 
 @Entity()
 export class Auction {
@@ -26,7 +26,7 @@ export class Auction {
   public price: number;
 
   @Column({ type: 'varchar', length: 16, nullable: true })
-  public priceType: PriceType;
+  public priceType: string;
 
   @Column({ type: 'json' })
   public location: Tlocation;
